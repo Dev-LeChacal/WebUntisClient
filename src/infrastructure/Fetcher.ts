@@ -1,5 +1,5 @@
+import { Authenticator } from "../auth/Authenticator";
 import { SchoolYear } from "../types/year";
-import { Authenticator } from "./Authenticator";
 
 export class Fetcher {
     constructor(

@@ -1,5 +1,5 @@
-import { Fetcher } from "./Fetcher";
-import { TokenProvider } from "./TokenProvider";
+import { TokenProvider } from "../auth/TokenProvider";
+import { Fetcher } from "../infrastructure/Fetcher";
 
 export class SchoolYearService {
     private id: number | null = null;

@@ -1,8 +1,9 @@
-import { Authenticator } from "../services/Authenticator";
-import { Fetcher } from "../services/Fetcher";
+
+import { Authenticator } from "../auth/Authenticator";
+import { TokenProvider } from "../auth/TokenProvider";
+import { Fetcher } from "../infrastructure/Fetcher";
 import { SchoolYearService } from "../services/SchoolYear";
 import { TimetableService } from "../services/Timetable";
-import { TokenProvider } from "../services/TokenProvider";
 import { Credentials } from "../types/credentials";
 import { SessionInfo } from "../types/session";
 import { TimetableResponse } from "../types/timetable";

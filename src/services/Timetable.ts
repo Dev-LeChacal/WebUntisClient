@@ -1,7 +1,7 @@
+import { Authenticator } from "../auth/Authenticator";
+import { TokenProvider } from "../auth/TokenProvider";
 import { TimetableResponse } from "../types/timetable";
-import { Authenticator } from "./Authenticator";
 import { SchoolYearService } from "./SchoolYear";
-import { TokenProvider } from "./TokenProvider";
 
 export class TimetableService {
     constructor(
