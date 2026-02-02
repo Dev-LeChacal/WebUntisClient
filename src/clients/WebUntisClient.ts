@@ -1,9 +1,11 @@
 import { Authenticator } from "../services/Authenticator";
 import { Fetcher } from "../services/Fetcher";
 import { SchoolYearService } from "../services/SchoolYear";
+import { TimetableService } from "../services/Timetable";
 import { TokenProvider } from "../services/TokenProvider";
 import { Credentials } from "../types/credentials";
 import { SessionInfo } from "../types/session";
+import { TimetableResponse } from "../types/timetable";
 import { JsonRpcClient } from "./JsonRpcClient";
 
 export class WebUntisClient {
@@ -18,6 +20,7 @@ export class WebUntisClient {
     private fetcher: Fetcher;
 
     private schoolYearService: SchoolYearService;
+    private timetableService: TimetableService;
 
     constructor(credentials: Credentials) {
         this.credentials = credentials;
@@ -33,6 +36,7 @@ export class WebUntisClient {
         this.tokenProvider = new TokenProvider(this.authenticator, this.fetcher, this.url);
 
         this.schoolYearService = new SchoolYearService(this.tokenProvider, this.fetcher);
+        this.timetableService = new TimetableService(this.tokenProvider, this.authenticator, this.schoolYearService, this.url);
     }
 
     //#region Login/Logout
@@ -93,46 +97,10 @@ export class WebUntisClient {
 
     //#endregion
 
+    //#region Timetable
 
-    //#region En cours de refactor
-
-    async getTimetable(start: Date, end: Date): Promise<any> {
-        const token = await this.getToken();
-        const tenantId = this.getTenantId();
-        const session = this.getSession();
-        const cookies = this.getCookies();
-        const schoolYearId = this.getSchoolYearIdString();
-
-        const startDate = start.toISOString().split("T")[0];
-        const endDate = end.toISOString().split("T")[0];
-
-        const params = new URLSearchParams({
-            start: startDate,
-            end: endDate,
-            format: "4",
-            resourceType: "STUDENT",
-            resources: session!.personId!.toString(),
-            periodTypes: "",
-            timetableType: "MY_TIMETABLE",
-            layout: "START_TIME",
-        });
-
-        const result = await fetch(
-            `${this.url}/WebUntis/api/rest/view/v1/timetable/entries?${params}`,
-            {
-                headers: {
-                    Cookie: cookies,
-                    Authorization: `Bearer ${token}`,
-                    "tenant-id": tenantId!,
-                    "x-webuntis-api-school-year-id": schoolYearId,
-                },
-            }
-        );
-
-        if (!result.ok)
-            throw new Error(`Timetable request failed with status ${result.status}`);
-
-        return await result.json();
+    async getTimetable(start: Date, end: Date): Promise<TimetableResponse> {
+        return await this.timetableService.getTimetable(start, end);
     }
 
     //#endregion
