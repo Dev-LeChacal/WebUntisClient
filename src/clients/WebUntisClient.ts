@@ -1,9 +1,9 @@
 import { Authenticator } from "../services/Authenticator";
 import { Fetcher } from "../services/Fetcher";
+import { SchoolYearService } from "../services/SchoolYear";
 import { TokenProvider } from "../services/TokenProvider";
 import { Credentials } from "../types/credentials";
 import { SessionInfo } from "../types/session";
-import { SchoolYear } from "../types/year";
 import { JsonRpcClient } from "./JsonRpcClient";
 
 export class WebUntisClient {
@@ -17,7 +17,7 @@ export class WebUntisClient {
     private tokenProvider: TokenProvider;
     private fetcher: Fetcher;
 
-    private schoolYearId: number | null = null;
+    private schoolYearService: SchoolYearService;
 
     constructor(credentials: Credentials) {
         this.credentials = credentials;
@@ -31,6 +31,8 @@ export class WebUntisClient {
         this.authenticator = new Authenticator(this.credentials, this.schoolBase64, this.rpc);
         this.fetcher = new Fetcher(this.authenticator, this.url);
         this.tokenProvider = new TokenProvider(this.authenticator, this.fetcher, this.url);
+
+        this.schoolYearService = new SchoolYearService(this.tokenProvider, this.fetcher);
     }
 
     //#region Login/Logout
@@ -39,7 +41,7 @@ export class WebUntisClient {
         const session = await this.authenticator.login();
 
         await this.getToken();
-        await this._loadSchoolYear();
+        await this.loadSchoolYearId();
 
         return session;
     }
@@ -75,43 +77,31 @@ export class WebUntisClient {
 
     //#endregion
 
+    //#region SchoolYear
+
+    async loadSchoolYearId(): Promise<number> {
+        return await this.schoolYearService.loadSchoolYearId();
+    }
+
+    getSchoolYearId(): number | null {
+        return this.schoolYearService.getYearId();
+    }
+
+    getSchoolYearIdString(): string {
+        return this.schoolYearService.getYearIdString();
+    }
+
+    //#endregion
+
 
     //#region En cours de refactor
-
-    private async _loadSchoolYear() {
-        const token = await this.getToken();
-        const tenantId = this.getTenantId();
-        const cookies = this.getCookies();
-
-        const result = await fetch(
-            `${this.url}/WebUntis/api/rest/view/v1/schoolyears`,
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "tenant-id": tenantId!,
-                    Cookie: cookies
-                }
-            }
-        );
-
-        if (!result.ok)
-            throw new Error(`School year request failed with status ${result.status}`);
-
-        const schoolYears: SchoolYear[] = await result.json();
-
-        if (!Array.isArray(schoolYears) || schoolYears.length === 0)
-            throw new Error("No school year data returned");
-
-        const currentYear = schoolYears[0];
-
-        this.schoolYearId = currentYear.id;
-    }
 
     async getTimetable(start: Date, end: Date): Promise<any> {
         const token = await this.getToken();
         const tenantId = this.getTenantId();
         const session = this.getSession();
         const cookies = this.getCookies();
+        const schoolYearId = this.getSchoolYearIdString();
 
         const startDate = start.toISOString().split("T")[0];
         const endDate = end.toISOString().split("T")[0];
@@ -134,7 +124,7 @@ export class WebUntisClient {
                     Cookie: cookies,
                     Authorization: `Bearer ${token}`,
                     "tenant-id": tenantId!,
-                    "x-webuntis-api-school-year-id": this.schoolYearId!.toString(),
+                    "x-webuntis-api-school-year-id": schoolYearId,
                 },
             }
         );

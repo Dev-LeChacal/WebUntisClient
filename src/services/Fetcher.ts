@@ -1,3 +1,4 @@
+import { SchoolYear } from "../types/year";
 import { Authenticator } from "./Authenticator";
 
 export class Fetcher {
@@ -18,5 +19,25 @@ export class Fetcher {
             throw new Error(`Token failed: ${response.status}`);
 
         return await response.text();
+    }
+
+    async schoolYears(token: string, tenantId: string): Promise<SchoolYear[]> {
+        const cookies = this.authenticator.getCookies();
+
+        const result = await fetch(
+            `${this.url}/WebUntis/api/rest/view/v1/schoolyears`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "tenant-id": tenantId,
+                    Cookie: cookies
+                }
+            }
+        );
+
+        if (!result.ok)
+            throw new Error(`School year request failed with status ${result.status}`);
+
+        return await result.json();
     }
 }
