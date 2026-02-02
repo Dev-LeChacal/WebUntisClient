@@ -2,9 +2,11 @@
 import { Authenticator } from "../auth/Authenticator";
 import { TokenProvider } from "../auth/TokenProvider";
 import { Fetcher } from "../infrastructure/Fetcher";
+import { ProfileService } from "../services/Profile";
 import { SchoolYearService } from "../services/SchoolYear";
 import { TimetableService } from "../services/Timetable";
 import { Credentials } from "../types/credentials";
+import { Profile } from "../types/profile";
 import { SessionInfo } from "../types/session";
 import { TimetableResponse } from "../types/timetable";
 import { JsonRpcClient } from "./JsonRpcClient";
@@ -20,6 +22,7 @@ export class WebUntisClient {
     private tokenProvider: TokenProvider;
     private fetcher: Fetcher;
 
+    private profileService: ProfileService;
     private schoolYearService: SchoolYearService;
     private timetableService: TimetableService;
 
@@ -34,8 +37,9 @@ export class WebUntisClient {
         this.rpc = new JsonRpcClient(identity, this.url);
         this.authenticator = new Authenticator(this.credentials, this.schoolBase64, this.rpc);
         this.fetcher = new Fetcher(this.authenticator, this.url);
-        this.tokenProvider = new TokenProvider(this.authenticator, this.fetcher, this.url);
+        this.tokenProvider = new TokenProvider(this.fetcher);
 
+        this.profileService = new ProfileService(this.fetcher);
         this.schoolYearService = new SchoolYearService(this.tokenProvider, this.fetcher);
         this.timetableService = new TimetableService(this.tokenProvider, this.authenticator, this.schoolYearService, this.url);
     }
@@ -82,6 +86,14 @@ export class WebUntisClient {
 
     //#endregion
 
+
+    //#region Profile
+
+    async getProfile(): Promise<Profile> {
+        return await this.profileService.getProfile();
+    }
+
+    //#endregion
 
     //#region SchoolYear
 

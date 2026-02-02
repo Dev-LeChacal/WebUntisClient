@@ -1,4 +1,5 @@
 import { Authenticator } from "../auth/Authenticator";
+import { Profile, ProfileResponse } from "../types/profile";
 import { SchoolYear } from "../types/year";
 
 export class Fetcher {
@@ -41,6 +42,21 @@ export class Fetcher {
         return await response.json();
     }
 
-        return await result.json();
+    async profile(): Promise<Profile> {
+        const cookies = this.authenticator.getCookies();
+
+        const response = await fetch(
+            `${this.url}/WebUntis/api/profile/general`,
+            {
+                headers: { Cookie: cookies }
+            }
+        );
+
+        if (!response.ok)
+            throw new Error(`Profile data request failed with status ${response.status}`);
+
+        const profileResponse: ProfileResponse = await response.json();
+
+        return await profileResponse.data.profile;
     }
 }
