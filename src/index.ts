@@ -1,1 +1,0 @@
-export { WebUntisClient } from "./clients/WebUntisClient";
