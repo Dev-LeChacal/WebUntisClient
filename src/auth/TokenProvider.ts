@@ -1,5 +1,4 @@
-import { Authenticator } from "./Authenticator";
-import { Fetcher } from "./Fetcher";
+import { Fetcher } from "../infrastructure/Fetcher";
 
 export class TokenProvider {
     private tenantId: string | null = null;
@@ -7,9 +6,7 @@ export class TokenProvider {
     private expiry: number = 0;
 
     constructor(
-        private authenticator: Authenticator,
         private fetcher: Fetcher,
-        private url: string,
     ) { }
 
     //#region Public
