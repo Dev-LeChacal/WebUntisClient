@@ -24,7 +24,7 @@ export class Fetcher {
     async schoolYears(token: string, tenantId: string): Promise<SchoolYear[]> {
         const cookies = this.authenticator.getCookies();
 
-        const result = await fetch(
+        const response = await fetch(
             `${this.url}/WebUntis/api/rest/view/v1/schoolyears`,
             {
                 headers: {
@@ -35,8 +35,11 @@ export class Fetcher {
             }
         );
 
-        if (!result.ok)
-            throw new Error(`School year request failed with status ${result.status}`);
+        if (!response.ok)
+            throw new Error(`School year request failed with status ${response.status}`);
+
+        return await response.json();
+    }
 
         return await result.json();
     }
