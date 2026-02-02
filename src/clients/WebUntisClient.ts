@@ -41,7 +41,7 @@ export class WebUntisClient {
 
         this.profileService = new ProfileService(this.fetcher);
         this.schoolYearService = new SchoolYearService(this.tokenProvider, this.fetcher);
-        this.timetableService = new TimetableService(this.tokenProvider, this.authenticator, this.schoolYearService, this.url);
+        this.timetableService = new TimetableService(this.fetcher, this.tokenProvider, this.authenticator, this.schoolYearService, this.url);
     }
 
     //#region Login/Logout

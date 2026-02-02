@@ -1,5 +1,7 @@
 import { Authenticator } from "../auth/Authenticator";
 import { Profile, ProfileResponse } from "../types/profile";
+import { SessionInfo } from "../types/session";
+import { TimetableResponse } from "../types/timetable";
 import { SchoolYear } from "../types/year";
 
 export class Fetcher {
@@ -40,6 +42,27 @@ export class Fetcher {
             throw new Error(`School year request failed with status ${response.status}`);
 
         return await response.json();
+    }
+
+    async timetable(token: string, tenantId: string, schoolYearId: string, params: URLSearchParams): Promise<TimetableResponse> {
+        const cookies = this.authenticator.getCookies();
+
+        const result = await fetch(
+            `${this.url}/WebUntis/api/rest/view/v1/timetable/entries?${params}`,
+            {
+                headers: {
+                    Cookie: cookies,
+                    Authorization: `Bearer ${token}`,
+                    "tenant-id": tenantId!,
+                    "x-webuntis-api-school-year-id": schoolYearId,
+                },
+            }
+        );
+
+        if (!result.ok)
+            throw new Error(`Timetable request failed with status ${result.status}`);
+
+        return await result.json();
     }
 
     async profile(): Promise<Profile> {
