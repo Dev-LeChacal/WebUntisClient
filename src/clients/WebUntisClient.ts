@@ -82,6 +82,7 @@ export class WebUntisClient {
 
     //#endregion
 
+
     //#region SchoolYear
 
     async loadSchoolYearId(): Promise<number> {
