@@ -2,8 +2,10 @@ import { Credentials } from "../Credentials";
 import { ValidationError } from "../errors/Validation";
 import { AuthenticationManager } from "../managers/Authentication";
 import { TokenManager } from "../managers/Token";
+import { AppDataService } from "../services/AppData";
 import { ProfileService } from "../services/Profile";
 import { TimetableService } from "../services/Timetable";
+import { AppData } from "../types/app-data";
 import { Profile } from "../types/profile";
 import { SessionInfo } from "../types/session";
 import { TimetableResponse } from "../types/timetable";
@@ -22,6 +24,7 @@ export class WebUntisClient {
     private readonly _tokenManager: TokenManager;
 
     // Services
+    private readonly _appDataService: AppDataService;
     private readonly _profileService: ProfileService;
     private readonly _timetableService: TimetableService;
 
@@ -45,6 +48,7 @@ export class WebUntisClient {
         );
 
         // Services
+        this._appDataService = new AppDataService(this._apiClient);
         this._profileService = new ProfileService(this._apiClient);
 
         this._timetableService = new TimetableService(
@@ -89,6 +93,11 @@ export class WebUntisClient {
     }
 
     //#endregion
+
+    async getAppData(): Promise<AppData> {
+        this._ensureAuthenticated();
+        return await this._appDataService.getAppData();
+    }
 
     /**
      * Get current user's profile
