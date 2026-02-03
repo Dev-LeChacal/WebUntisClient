@@ -1,4 +1,5 @@
 import { test } from "node:test";
+
 import { Credentials, WebUntisClient } from "../src";
 
 test("get own timetable", async () => {
