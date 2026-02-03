@@ -63,7 +63,7 @@ export class ApiClient {
             throw new Error('Tenant ID not available');
         }
 
-        return this._httpClient.get<TimetableResponse>(
+        return await this._httpClient.get<TimetableResponse>(
             `/WebUntis/api/rest/view/v1/timetable/entries?${params}`,
             {
                 Authorization: `Bearer ${token}`,

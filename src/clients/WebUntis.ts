@@ -104,7 +104,7 @@ export class WebUntisClient {
      */
     async getProfile(): Promise<Profile> {
         this._ensureAuthenticated();
-        return this._profileService.getProfile();
+        return await this._profileService.getProfile();
     }
 
     /**
@@ -115,7 +115,7 @@ export class WebUntisClient {
      */
     async getTimetable(start: Date, end: Date): Promise<TimetableResponse> {
         this._ensureAuthenticated();
-        return this._timetableService.getTimetable(start, end);
+        return await this._timetableService.getTimetable(start, end);
     }
 
     //#region Helpers

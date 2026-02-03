@@ -25,7 +25,7 @@ export class TimetableService {
         const schoolYearId = "24"; // TODO: LE APP DATA
         const params = this._buildTimetableParams(start, end, session.personId);
 
-        return this._apiClient.fetchTimetable(schoolYearId, params);
+        return await this._apiClient.fetchTimetable(schoolYearId, params);
     }
 
     /**
