@@ -5,7 +5,7 @@ import { TokenManager } from "../managers/Token";
 import { AppDataService } from "../services/AppData";
 import { ProfileService } from "../services/Profile";
 import { TimetableService } from "../services/Timetable";
-import { AppData } from "../types/app-data";
+import { AppData, CurrentSchoolYear, Holiday, OneDriveData, Tenant, User } from '../types/app-data';
 import { Profile } from "../types/profile";
 import { SessionInfo } from "../types/session";
 import { TimetableResponse } from "../types/timetable";
@@ -44,7 +44,8 @@ export class WebUntisClient {
             this._httpClient,
             () => this._authManager.getCookies(),
             () => this._tokenManager.getToken(),
-            () => this._tokenManager.getTenantId()
+            () => this._tokenManager.getTenantId(),
+            () => this.getCurrentSchoolYearId(),
         );
 
         // Services
@@ -66,6 +67,7 @@ export class WebUntisClient {
         const session = await this._authManager.login();
 
         await this._tokenManager.getToken();
+        await this._appDataService.getAppData();
 
         return session;
     }
@@ -94,10 +96,115 @@ export class WebUntisClient {
 
     //#endregion
 
+    //#region App Data
+
+    /**
+     * Get app data
+     */
     async getAppData(): Promise<AppData> {
         this._ensureAuthenticated();
         return await this._appDataService.getAppData();
     }
+
+    /**
+     * Get current school year from cache
+     */
+    getCurrentSchoolYear(): CurrentSchoolYear {
+        return this._appDataService.getCurrentSchoolYear();
+    }
+
+    /**
+     * Get current school year id from cache
+     */
+    getCurrentSchoolYearId(): string {
+        return this._appDataService.getCurrentSchoolYearId();
+    }
+
+    /**
+     * Get departments from cache
+     */
+    getDepartments(): unknown[] {
+        return this._appDataService.getDepartments();
+    }
+
+    /**
+     * Check if playground mode is enabled
+     */
+    isPlayground(): boolean {
+        return this._appDataService.isPlayground();
+    }
+
+    /**
+     * Get OneDrive data from cache
+     */
+    getOneDriveData(): OneDriveData {
+        return this._appDataService.getOneDriveData();
+    }
+
+    /**
+     * Get tenant information from cache
+     */
+    getTenant(): Tenant {
+        return this._appDataService.getTenant();
+    }
+
+    /**
+     * Check if UI 2020 is enabled
+     */
+    isUi2020(): boolean {
+        return this._appDataService.isUi2020();
+    }
+
+    /**
+     * Get user information from cache
+     */
+    getUser(): User {
+        return this._appDataService.getUser();
+    }
+
+    /**
+     * Get user permissions from cache
+     */
+    getPermissions(): string[] {
+        return this._appDataService.getPermissions();
+    }
+
+    /**
+     * Get settings from cache
+     */
+    getSettings(): string[] {
+        return this._appDataService.getSettings();
+    }
+
+    /**
+     * Get polling jobs from cache
+     */
+    getPollingJobs(): unknown[] {
+        return this._appDataService.getPollingJobs();
+    }
+
+    /**
+     * Check if support access is open
+     */
+    isSupportAccessOpen(): boolean {
+        return this._appDataService.isSupportAccessOpen();
+    }
+
+    /**
+     * Get license expiration date from cache
+     */
+    getLicenceExpiresAt(): string {
+        return this._appDataService.getLicenceExpiresAt();
+    }
+
+    /**
+     * Get holidays from cache
+     */
+    getHolidays(): Holiday[] {
+        return this._appDataService.getHolidays();
+    }
+
+//#endregion
 
     /**
      * Get current user's profile
