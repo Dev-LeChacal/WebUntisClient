@@ -11,7 +11,8 @@ export class ApiClient {
         private readonly _httpClient: HttpClient,
         private readonly _getCookies: () => string,
         private readonly _getToken: () => Promise<string>,
-        private readonly _getTenantId: () => string | null
+        private readonly _getTenantId: () => string | null,
+        private readonly _getSchoolYearId: () => string,
     ) { }
 
     /**
@@ -52,12 +53,12 @@ export class ApiClient {
      * Fetch timetable entries
      */
     async fetchTimetable(
-        schoolYearId: string,
         params: URLSearchParams,
     ): Promise<TimetableResponse> {
         const token = await this._getToken();
         const tenantId = this._getTenantId();
         const cookies = this._getCookies();
+        const schoolYearId = this._getSchoolYearId();
 
         if (!tenantId) {
             throw new Error('Tenant ID not available');

@@ -22,10 +22,9 @@ export class TimetableService {
             throw new AuthenticationError('No active session or person ID');
         }
 
-        const schoolYearId = "24"; // TODO: LE APP DATA
         const params = this._buildTimetableParams(start, end, session.personId);
 
-        return await this._apiClient.fetchTimetable(schoolYearId, params);
+        return await this._apiClient.fetchTimetable(params);
     }
 
     /**
