@@ -126,7 +126,9 @@ export class WebUntisClient {
     private _ensureAuthenticated(): void {
         const isNotAuthenticated = !this._authManager.isAuthenticated();
 
-        if (isNotAuthenticated) { throw new ValidationError('Not authenticated. Please call login() first.'); }
+        if (isNotAuthenticated) {
+            throw new ValidationError('Not authenticated. Please call login() first.');
+        }
     }
 
     //#endregion
