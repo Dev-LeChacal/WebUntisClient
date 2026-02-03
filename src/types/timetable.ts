@@ -1,7 +1,7 @@
 export interface TimetableResponse {
     format: number;
     days: Day[];
-    errors: any[];
+    errors: unknown[];
 }
 
 export interface Day {
@@ -9,7 +9,7 @@ export interface Day {
     resourceType: string;
     resource: Resource;
     status: string;
-    dayEntries: any[];
+    dayEntries: unknown[];
     gridEntries: GridEntry[];
     backEntries: BackEntry[];
 }
@@ -46,9 +46,9 @@ export interface GridEntry {
     lessonInfo: string | null;
     substitutionText: string;
     userName: string | null;
-    moved: any | null;
-    durationTotal: any | null;
-    link: any | null;
+    moved: unknown | null;
+    durationTotal: unknown | null;
+    link: unknown | null;
 }
 
 export interface BackEntry {
@@ -62,10 +62,10 @@ export interface BackEntry {
     layoutStartPosition: number;
     layoutWidth: number;
     color: string;
-    resource: any | null;
+    resource: unknown | null;
     shortName: string;
     longName: string;
-    notesAll: any | null;
+    notesAll: unknown | null;
 }
 
 export interface Duration {
@@ -75,7 +75,7 @@ export interface Duration {
 
 export interface Position {
     current: PositionData;
-    removed: any | null;
+    removed: unknown | null;
 }
 
 export interface PositionData {

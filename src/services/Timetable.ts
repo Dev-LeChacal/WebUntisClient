@@ -1,38 +1,60 @@
-import { Authenticator } from "../auth/Authenticator";
-import { TokenProvider } from "../auth/TokenProvider";
-import { Fetcher } from "../infrastructure/Fetcher";
+import { ApiClient } from "../clients/Api";
+import { AuthenticationError } from "../errors/Authentication";
+import { AuthenticationManager } from "../managers/Authentication";
 import { TimetableResponse } from "../types/timetable";
-import { SchoolYearService } from "./SchoolYear";
 
+/**
+ * Service for fetching timetable data
+ */
 export class TimetableService {
     constructor(
-        private fetcher: Fetcher,
-        private tokenProvider: TokenProvider,
-        private authenticator: Authenticator,
-        private schoolYearService: SchoolYearService,
-        private url: string,
+        private readonly _apiClient: ApiClient,
+        private readonly _authManager: AuthenticationManager,
     ) { }
 
+    /**
+     * Get timetable for date range
+     */
     async getTimetable(start: Date, end: Date): Promise<TimetableResponse> {
-        const token = await this.tokenProvider.getToken();
-        const tenantId = this.tokenProvider.getTenantId();
-        const session = this.authenticator.getSession();
-        const schoolYearId = this.schoolYearService.getYearIdString();
+        const session = this._authManager.getSession();
 
-        const startDate = start.toISOString().split("T")[0];
-        const endDate = end.toISOString().split("T")[0];
+        if (!session?.personId) {
+            throw new AuthenticationError('No active session or person ID');
+        }
 
-        const params = new URLSearchParams({
+        const schoolYearId = "24"; // TODO: LE APP DATA
+        const params = this._buildTimetableParams(start, end, session.personId);
+
+        return this._apiClient.fetchTimetable(schoolYearId, params);
+    }
+
+    /**
+     * Build query parameters for timetable request
+     */
+    private _buildTimetableParams(
+        start: Date,
+        end: Date,
+        personId: number
+    ): URLSearchParams {
+        const startDate = this._formatDate(start);
+        const endDate = this._formatDate(end);
+
+        return new URLSearchParams({
             start: startDate,
             end: endDate,
-            format: "4",
-            resourceType: "STUDENT",
-            resources: session!.personId!.toString(),
-            periodTypes: "",
-            timetableType: "MY_TIMETABLE",
-            layout: "START_TIME",
+            format: '4',
+            resourceType: 'STUDENT',
+            resources: personId.toString(),
+            periodTypes: '',
+            timetableType: 'MY_TIMETABLE',
+            layout: 'START_TIME',
         });
+    }
 
-        return await this.fetcher.timetable(token, tenantId!, schoolYearId, params);
+    /**
+     * Format date to YYYY-MM-DD
+     */
+    private _formatDate(date: Date): string {
+        return date.toISOString().split('T')[0];
     }
 }

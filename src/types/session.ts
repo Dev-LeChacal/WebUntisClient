@@ -1,7 +1,12 @@
+export interface SessionResponse {
+    jsonrpc: string;
+    id: string;
+    result: SessionInfo;
+}
+
 export interface SessionInfo {
-    klasseId?: number;
-    personId?: number;
     sessionId?: string;
     personType?: number;
-    jwt_token?: string;
+    personId?: number;
+    klasseId?: number;
 }

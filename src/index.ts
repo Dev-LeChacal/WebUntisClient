@@ -1,1 +1,2 @@
-export { WebUntisClient } from "./clients/WebUntisClient";
+export { WebUntisClient } from "./clients/WebUntis";
+export { Credentials } from "./Credentials";

@@ -1,13 +1,17 @@
-import { TokenProvider } from "../auth/TokenProvider";
-import { Fetcher } from "../infrastructure/Fetcher";
-import { Profile } from "../types/profile";
+import { ApiClient } from '../clients/Api';
+import { Profile } from '../types/profile';
 
+/**
+ * Service for managing user profile data
+ */
 export class ProfileService {
-    constructor(
-        private fetcher: Fetcher,
-    ) { }
+    constructor(private readonly _apiClient: ApiClient) { }
 
+    /**
+     * Get current user's profile
+     */
     async getProfile(): Promise<Profile> {
-        return await this.fetcher.profile();
+        const response = await this._apiClient.fetchProfile();
+        return response.data.profile;
     }
 }
