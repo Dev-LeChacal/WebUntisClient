@@ -4,7 +4,7 @@ export class UtilsDate {
     /**
      * Format date to YYYY-MM-DD or YYYYMMDD
      */
-    static formatDate(date: Date, format: Format): string {
+    static formatDate(date: Date, format: Format = "YYYY-MM-DD"): string {
         const isoDate = date.toISOString().split('T')[0];
 
         if (format === "YYYYMMDD") {
