@@ -1,6 +1,13 @@
+<div align="center">
+
 # Web Untis Client
 
+[![npm version](https://badge.fury.io/js/webuntis-client.svg)](https://www.npmjs.com/package/webuntis-client)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 A Web Untis API Client to interact with [Web Untis](https://webuntis.com).
+
+</div>
 
 > [!CAUTION]
 > Work In Progress - Not feature complete yet
