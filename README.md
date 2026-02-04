@@ -2,8 +2,7 @@
 
 A Web Untis API Client to interact with [Web Untis](https://webuntis.com).
 
-> Work In Progress \
-> Not complete
+> Work In Progress - Not feature complete yet
 
 ## Examples
 
@@ -46,3 +45,21 @@ await client.getAppData();
 ```typescript
 await client.getProfile();
 ```
+
+## Installation
+
+```bash
+yarn add webuntis-client
+
+npm i webuntis-client
+
+pnpm i webuntis-client
+```
+
+## License
+
+[MIT](LICENSE)
+
+## Disclaimer
+
+This is an unofficial client and is not affiliated with Untis GmbH.
