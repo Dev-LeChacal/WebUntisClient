@@ -206,6 +206,7 @@ export class WebUntisClient {
     }
 
 //#endregion
+    //#endregion
 
     //#region User's Profile
 
