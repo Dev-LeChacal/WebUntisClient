@@ -75,6 +75,9 @@ export class ApiClient {
         );
     }
 
+    /**
+     * Fetch homeworks and lessons
+     */
     async fetchHomeworksLessons(params: URLSearchParams): Promise<HomeworksLessonsResponse> {
         const cookies = this._getCookies();
 

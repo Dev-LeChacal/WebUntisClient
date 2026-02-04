@@ -1,19 +1,19 @@
-import { ApiClient } from "./clients/Api";
-import { HttpClient } from "./clients/Http";
-import { JsonRpcClient } from "./clients/JsonRpc";
-import { Credentials } from "./Credentials";
-import { ValidationError } from "./errors/Validation";
-import { AuthenticationManager } from "./managers/Authentication";
-import { TokenManager } from "./managers/Token";
-import { AppDataService } from "./services/AppData";
+import { ApiClient } from './clients/Api';
+import { HttpClient } from './clients/Http';
+import { JsonRpcClient } from './clients/JsonRpc';
+import { Credentials } from './Credentials';
+import { ValidationError } from './errors/Validation';
+import { AuthenticationManager } from './managers/Authentication';
+import { TokenManager } from './managers/Token';
+import { AppDataService } from './services/AppData';
 import { HomeworksService } from './services/Homeworks';
-import { ProfileService } from "./services/Profile";
-import { TimetableService } from "./services/Timetable";
+import { ProfileService } from './services/Profile';
+import { TimetableService } from './services/Timetable';
 import { AppData, CurrentSchoolYear, Holiday, OneDriveData, Tenant, User } from './types/app-data';
 import { HomeworksLessonsData } from './types/homework';
-import { Profile } from "./types/profile";
-import { SessionInfo } from "./types/session";
-import { TimetableResponse } from "./types/timetable";
+import { Profile } from './types/profile';
+import { SessionInfo } from './types/session';
+import { TimetableResponse } from './types/timetable';
 
 export class WebUntisClient {
     // Clients
@@ -48,7 +48,7 @@ export class WebUntisClient {
             () => this._authManager.getCookies(),
             () => this._tokenManager.getToken(),
             () => this._tokenManager.getTenantId(),
-            () => this.getCurrentSchoolYearId(),
+            () => this.getCurrentSchoolYearId()
         );
 
         // Services
@@ -58,7 +58,7 @@ export class WebUntisClient {
 
         this._timetableService = new TimetableService(
             this._apiClient,
-            this._authManager,
+            this._authManager
         );
     }
 
@@ -227,7 +227,7 @@ export class WebUntisClient {
 
     /**
      * Get own timetable for date range
-     * 
+     *
      * @param start - Start date
      * @param end - End date
      */
@@ -240,6 +240,12 @@ export class WebUntisClient {
 
     //#region Homeworks and Lessons
 
+    /**
+     * Get homeworks and lessons for date range
+     *
+     * @param start - Start date
+     * @param end - End date
+     */
     async getHomeworksLessons(start: Date, end: Date): Promise<HomeworksLessonsData> {
         this._ensureAuthenticated();
         return await this._homeworksService.getHomeworksLessons(start, end);
