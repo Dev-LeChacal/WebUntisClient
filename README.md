@@ -33,13 +33,22 @@ await client.login();
 await client.logout();
 ```
 
-### Timetable
+### Own Timetable
 
 ```typescript
 const start = new Date("2026");
 const end = new Date("2027");
 
 await client.getOwnTimetable(start, end);
+```
+
+### Class Timetable
+
+```typescript
+const start = new Date("2026");
+const end = new Date("2027");
+
+await client.getClassTimetable(start, end);
 ```
 
 ### Homeworks and Lessons
