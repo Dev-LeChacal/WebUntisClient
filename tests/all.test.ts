@@ -7,7 +7,7 @@ let client: WebUntisClient;
 before(async () => {
     const credentials = new Credentials(
         "WebUntisClient",
-        "institut-saint-louis",
+        process.env.UNTIS_SCHOOL!,
         process.env.UNTIS_USERNAME!,
         process.env.UNTIS_PASSWORD!,
     );
