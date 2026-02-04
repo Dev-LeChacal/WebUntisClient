@@ -1,17 +1,17 @@
-import { Credentials } from "../Credentials";
-import { ValidationError } from "../errors/Validation";
-import { AuthenticationManager } from "../managers/Authentication";
-import { TokenManager } from "../managers/Token";
-import { AppDataService } from "../services/AppData";
-import { ProfileService } from "../services/Profile";
-import { TimetableService } from "../services/Timetable";
-import { AppData, CurrentSchoolYear, Holiday, OneDriveData, Tenant, User } from '../types/app-data';
-import { Profile } from "../types/profile";
-import { SessionInfo } from "../types/session";
-import { TimetableResponse } from "../types/timetable";
-import { ApiClient } from "./Api";
-import { HttpClient } from "./Http";
-import { JsonRpcClient } from "./JsonRpc";
+import { ApiClient } from "./clients/Api";
+import { HttpClient } from "./clients/Http";
+import { JsonRpcClient } from "./clients/JsonRpc";
+import { Credentials } from "./Credentials";
+import { ValidationError } from "./errors/Validation";
+import { AuthenticationManager } from "./managers/Authentication";
+import { TokenManager } from "./managers/Token";
+import { AppDataService } from "./services/AppData";
+import { ProfileService } from "./services/Profile";
+import { TimetableService } from "./services/Timetable";
+import { AppData, CurrentSchoolYear, Holiday, OneDriveData, Tenant, User } from './types/app-data';
+import { Profile } from "./types/profile";
+import { SessionInfo } from "./types/session";
+import { TimetableResponse } from "./types/timetable";
 
 export class WebUntisClient {
     // Clients
