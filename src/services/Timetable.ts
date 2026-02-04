@@ -1,7 +1,7 @@
-import { ApiClient } from "../clients/Api";
-import { AuthenticationError } from "../errors/Authentication";
-import { AuthenticationManager } from "../managers/Authentication";
-import { TimetableResponse } from "../types/timetable";
+import { ApiClient } from '../clients/Api';
+import { AuthenticationError } from '../errors/Authentication';
+import { SessionInfo } from '../types/session';
+import { TimetableResponse } from '../types/timetable';
 import { UtilsDate } from '../utils/date';
 
 /**
@@ -10,14 +10,15 @@ import { UtilsDate } from '../utils/date';
 export class TimetableService {
     constructor(
         private readonly _apiClient: ApiClient,
-        private readonly _authManager: AuthenticationManager,
-    ) { }
+        private readonly _getSession: () => SessionInfo | null
+    ) {
+    }
 
     /**
      * Get timetable for date range
      */
     async getOwnTimetable(start: Date, end: Date): Promise<TimetableResponse> {
-        const session = this._authManager.getSession();
+        const session = this._getSession();
 
         if (!session?.personId) {
             throw new AuthenticationError('No active session or person ID');
@@ -47,7 +48,7 @@ export class TimetableService {
             resources: personId.toString(),
             periodTypes: '',
             timetableType: 'MY_TIMETABLE',
-            layout: 'START_TIME',
+            layout: 'START_TIME'
         });
     }
 }

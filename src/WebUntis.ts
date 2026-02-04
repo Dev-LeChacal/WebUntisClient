@@ -58,7 +58,7 @@ export class WebUntisClient {
 
         this._timetableService = new TimetableService(
             this._apiClient,
-            this._authManager
+            () => this._authManager.getSession()
         );
     }
 
@@ -173,7 +173,7 @@ export class WebUntisClient {
     getUserId(): string {
         return this._appDataService.getUserId();
     }
-    
+
     /**
      * Get user permissions from cache
      */
