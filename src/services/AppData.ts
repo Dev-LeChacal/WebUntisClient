@@ -20,6 +20,13 @@ export class AppDataService {
         return this._data;
     }
 
+    /**
+     * Clear the cached data
+     */
+    clearCache(): void {
+        this._data = null;
+    }
+
     //#region Getters
 
     /**

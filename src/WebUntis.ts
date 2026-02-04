@@ -78,6 +78,7 @@ export class WebUntisClient {
     async logout(): Promise<void> {
         await this._authManager.logout();
         this._tokenManager.clearToken();
+        this._appDataService.clearCache();
     }
 
     /**
