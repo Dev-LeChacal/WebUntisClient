@@ -2,6 +2,7 @@ import { ApiClient } from "../clients/Api";
 import { AuthenticationError } from "../errors/Authentication";
 import { AuthenticationManager } from "../managers/Authentication";
 import { TimetableResponse } from "../types/timetable";
+import { UtilsDate } from '../utils/date';
 
 /**
  * Service for fetching timetable data
@@ -35,8 +36,8 @@ export class TimetableService {
         end: Date,
         personId: number
     ): URLSearchParams {
-        const startDate = this._formatDate(start);
-        const endDate = this._formatDate(end);
+        const startDate = UtilsDate.formatDate(start);
+        const endDate = UtilsDate.formatDate(end);
 
         return new URLSearchParams({
             start: startDate,
@@ -48,12 +49,5 @@ export class TimetableService {
             timetableType: 'MY_TIMETABLE',
             layout: 'START_TIME',
         });
-    }
-
-    /**
-     * Format date to YYYY-MM-DD
-     */
-    private _formatDate(date: Date): string {
-        return date.toISOString().split('T')[0];
     }
 }
