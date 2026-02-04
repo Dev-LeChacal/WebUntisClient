@@ -206,6 +206,8 @@ export class WebUntisClient {
 
 //#endregion
 
+    //#region User's Profile
+
     /**
      * Get current user's profile
      */
@@ -213,6 +215,10 @@ export class WebUntisClient {
         this._ensureAuthenticated();
         return await this._profileService.getProfile();
     }
+
+    //#endregion
+
+    //#region Timetable
 
     /**
      * Get timetable for date range
@@ -224,6 +230,8 @@ export class WebUntisClient {
         this._ensureAuthenticated();
         return await this._timetableService.getTimetable(start, end);
     }
+
+    //#endregion
 
     //#region Helpers
 
