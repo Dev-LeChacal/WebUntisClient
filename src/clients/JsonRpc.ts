@@ -1,6 +1,6 @@
 import { AuthenticationError } from '../errors/Authentication';
 import { JsonRpcResponse } from '../types/jsonrpc';
-import { SessionInfo } from '../types/session';
+import { SessionInfo, SessionResponse } from '../types/session';
 import { HttpClient } from './Http';
 
 /**
@@ -25,17 +25,19 @@ export class JsonRpcClient {
         password: string,
         client: string
     ): Promise<SessionInfo> {
-        const result = await this._call<SessionInfo>('authenticate', {
+        const result = await this._call<SessionResponse>('authenticate', {
             user: username,
             password: password,
             client: client,
         });
 
-        if (!result.sessionId) {
+        const info = result.result;
+
+        if (!info.sessionId) {
             throw new AuthenticationError('Authentication failed: No session ID returned');
         }
 
-        return result;
+        return info;
     }
 
     /**
