@@ -61,7 +61,6 @@ typings/
 
 .DS_Store
 .DS_store
-.env
-test2.js
 
 .vscode
+dist
