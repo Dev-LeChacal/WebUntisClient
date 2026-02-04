@@ -162,6 +162,13 @@ export class WebUntisClient {
     }
 
     /**
+     * Get tenant display name from cache
+     */
+    getTenantDisplayName(): string {
+        return this._appDataService.getTenantDisplayName();
+    }
+
+    /**
      * Check if UI 2020 is enabled
      */
     isUi2020(): boolean {
@@ -180,6 +187,13 @@ export class WebUntisClient {
      */
     getStudentId(): string {
         return this._appDataService.getStudentId();
+    }
+
+    /**
+     * Get student display name from cache
+     */
+    getStudentDisplayName(): string {
+        return this._appDataService.getStudentDisplayName();
     }
 
     /**

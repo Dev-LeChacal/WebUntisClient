@@ -79,6 +79,14 @@ export class AppDataService {
     }
 
     /**
+     * Get tenant display name from cache
+     */
+    getTenantDisplayName(): string {
+        this._ensureHasData();
+        return this._data!.tenant.displayName;
+    }
+
+    /**
      * Check if UI 2020 is enabled
      */
     isUi2020(): boolean {
@@ -100,6 +108,14 @@ export class AppDataService {
     getStudentId(): string {
         this._ensureHasData();
         return this._data!.user.person.id.toString();
+    }
+
+    /**
+     * Get student id from cache
+     */
+    getStudentDisplayName(): string {
+        this._ensureHasData();
+        return this._data!.user.person.displayName;
     }
 
     /**
