@@ -6,7 +6,11 @@
     "module": "dist/index.js",
     "typings": "dist/index.d.ts",
     "scripts": {
-        "build": "tsc"
+        "build": "tsc",
+
+        "release:patch": "npm version patch && bun run build && npm publish",
+        "release:minor": "npm version minor && bun run build && npm publish",
+        "release:major": "npm version major && bun run build && npm publish"
     },
     "repository": {
         "type": "git",
