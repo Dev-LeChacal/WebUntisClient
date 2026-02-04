@@ -51,6 +51,15 @@ const end = new Date("2027");
 await client.getHomeworksLessons(start, end);
 ```
 
+### Absences
+
+```typescript
+const start = new Date("2026");
+const end = new Date("2027");
+
+await client.getAbsences(start, end);
+```
+
 ### App data
 
 ```typescript
