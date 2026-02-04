@@ -99,9 +99,9 @@ export class HttpClient {
         const contentType = response.headers.get('content-type');
 
         if (contentType?.includes('application/json')) {
-            return response.json() as T;
+            return await response.json();
         }
 
-        return response.text() as T;
+        return await response.text() as T;
     }
 }
