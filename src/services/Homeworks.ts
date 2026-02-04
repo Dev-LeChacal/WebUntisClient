@@ -6,7 +6,8 @@ import { UtilsDate } from '../utils/date';
  * Service for managing homeworks
  */
 export class HomeworksService {
-    constructor(private readonly _apiClient: ApiClient) { }
+    constructor(private readonly _apiClient: ApiClient) {
+    }
 
     /**
      * Get homeworks and lessons
@@ -22,14 +23,14 @@ export class HomeworksService {
      */
     private _buildHomeworksLessonsParams(
         start: Date,
-        end: Date,
+        end: Date
     ): URLSearchParams {
-        const startDate = UtilsDate.formatDate(start, "YYYYMMDD");
-        const endDate = UtilsDate.formatDate(end, "YYYYMMDD");
+        const startDate = UtilsDate.toUntisDate(start, 'YYYYMMDD');
+        const endDate = UtilsDate.toUntisDate(end, 'YYYYMMDD');
 
         return new URLSearchParams({
             startDate: startDate,
-            endDate: endDate,
+            endDate: endDate
         });
     }
 }

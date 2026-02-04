@@ -53,8 +53,8 @@ export class TimetableService {
         resourceType: 'STUDENT' | 'CLASS',
         personId: number
     ): URLSearchParams {
-        const startDate = UtilsDate.formatDate(start);
-        const endDate = UtilsDate.formatDate(end);
+        const startDate = UtilsDate.toUntisDate(start);
+        const endDate = UtilsDate.toUntisDate(end);
         const timetableType = resourceType === 'STUDENT' ? 'MY_TIMETABLE' : 'STANDARD';
 
         return new URLSearchParams({

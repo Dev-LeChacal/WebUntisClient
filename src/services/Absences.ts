@@ -28,8 +28,8 @@ export class AbsencesService {
         start: Date,
         end: Date
     ): URLSearchParams {
-        const startDate = UtilsDate.formatDate(start, 'YYYYMMDD');
-        const endDate = UtilsDate.formatDate(end, 'YYYYMMDD');
+        const startDate = UtilsDate.toUntisDate(start, 'YYYYMMDD');
+        const endDate = UtilsDate.toUntisDate(end, 'YYYYMMDD');
         const studentId = this._getStudentId();
         const excuseStatusId = '-1';
 
