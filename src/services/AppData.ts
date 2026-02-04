@@ -1,4 +1,4 @@
-import { ApiClient } from "../clients/Api";
+import { ApiClient } from '../clients/Api';
 import { ValidationError } from '../errors/Validation';
 import { AppData, CurrentSchoolYear, Holiday, OneDriveData, Tenant, User } from '../types/app-data';
 
@@ -9,8 +9,9 @@ export class AppDataService {
     private _data: AppData | null = null;
 
     constructor(
-        private readonly _apiClient: ApiClient,
-    ) { }
+        private readonly _apiClient: ApiClient
+    ) {
+    }
 
     /**
      * Get app data
@@ -94,6 +95,14 @@ export class AppDataService {
     }
 
     /**
+     * Get user id from cache
+     */
+    getUserId(): string {
+        this._ensureHasData();
+        return this._data!.user.id.toString();
+    }
+
+    /**
      * Get user permissions from cache
      */
     getPermissions(): string[] {
@@ -147,7 +156,7 @@ export class AppDataService {
 
     private _ensureHasData(): void {
         if (this._data === null) {
-            throw new ValidationError("Data was not found. Please call getAppData() first.");
+            throw new ValidationError('Data was not found. Please call getAppData() first.');
         }
     }
 

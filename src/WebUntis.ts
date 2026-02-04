@@ -168,6 +168,13 @@ export class WebUntisClient {
     }
 
     /**
+     * Get user id from cache
+     */
+    getUserId(): string {
+        return this._appDataService.getUserId();
+    }
+    
+    /**
      * Get user permissions from cache
      */
     getPermissions(): string[] {
