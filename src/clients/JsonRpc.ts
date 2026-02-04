@@ -25,28 +25,17 @@ export class JsonRpcClient {
         password: string,
         client: string
     ): Promise<SessionInfo> {
-        try {
-            const result = await this._call<SessionInfo>('authenticate', {
-                user: username,
-                password: password,
-                client: client,
-            });
+        const result = await this._call<SessionInfo>('authenticate', {
+            user: username,
+            password: password,
+            client: client,
+        });
 
-            if (!result.sessionId) {
-                throw new AuthenticationError('Authentication failed: No session ID returned');
-            }
-
-            return result;
-
-        } catch (error) {
-            if (error instanceof AuthenticationError) {
-                throw error;
-            }
-
-            throw new AuthenticationError(
-                `Authentication failed: ${error instanceof Error ? error.message : 'Unknown error'}`
-            );
+        if (!result.sessionId) {
+            throw new AuthenticationError('Authentication failed: No session ID returned');
         }
+
+        return result;
     }
 
     /**
