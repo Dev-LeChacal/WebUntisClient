@@ -218,7 +218,7 @@ export class WebUntisClient {
 
     //#endregion
 
-    //#region Timetable
+    //#region Own Timetable
 
     /**
      * Get timetable for date range
