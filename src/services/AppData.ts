@@ -95,11 +95,11 @@ export class AppDataService {
     }
 
     /**
-     * Get user id from cache
+     * Get student id from cache
      */
-    getUserId(): string {
+    getStudentId(): string {
         this._ensureHasData();
-        return this._data!.user.id.toString();
+        return this._data!.user.person.id.toString();
     }
 
     /**

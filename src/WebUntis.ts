@@ -5,10 +5,12 @@ import { Credentials } from './Credentials';
 import { ValidationError } from './errors/Validation';
 import { AuthenticationManager } from './managers/Authentication';
 import { TokenManager } from './managers/Token';
+import { AbsencesService } from './services/Absences';
 import { AppDataService } from './services/AppData';
 import { HomeworksService } from './services/Homeworks';
 import { ProfileService } from './services/Profile';
 import { TimetableService } from './services/Timetable';
+import { AbsencesStudentsData } from './types/absences';
 import { AppData, CurrentSchoolYear, Holiday, OneDriveData, Tenant, User } from './types/app-data';
 import { HomeworksLessonsData } from './types/homework';
 import { Profile } from './types/profile';
@@ -30,6 +32,7 @@ export class WebUntisClient {
     private readonly _profileService: ProfileService;
     private readonly _homeworksService: HomeworksService;
     private readonly _timetableService: TimetableService;
+    private readonly _absencesService: AbsencesService;
 
     constructor(credentials: Credentials) {
         const { identity, url } = credentials;
@@ -59,6 +62,11 @@ export class WebUntisClient {
         this._timetableService = new TimetableService(
             this._apiClient,
             () => this._authManager.getSession()
+        );
+
+        this._absencesService = new AbsencesService(
+            this._apiClient,
+            () => this.getStudentId()
         );
     }
 
@@ -168,10 +176,10 @@ export class WebUntisClient {
     }
 
     /**
-     * Get user id from cache
+     * Get student id from cache
      */
-    getUserId(): string {
-        return this._appDataService.getUserId();
+    getStudentId(): string {
+        return this._appDataService.getStudentId();
     }
 
     /**
@@ -256,6 +264,21 @@ export class WebUntisClient {
     async getHomeworksLessons(start: Date, end: Date): Promise<HomeworksLessonsData> {
         this._ensureAuthenticated();
         return await this._homeworksService.getHomeworksLessons(start, end);
+    }
+
+    //#endregion
+
+    //#region Absences
+
+    /**
+     * Get absences for date range
+     *
+     * @param start - Start date
+     * @param end - End date
+     */
+    async getAbsences(start: Date, end: Date): Promise<AbsencesStudentsData> {
+        this._ensureAuthenticated();
+        return await this._absencesService.getAbsences(start, end);
     }
 
     //#endregion

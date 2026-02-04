@@ -1,3 +1,4 @@
+import { AbsencesStudentsResponse } from '../types/absences';
 import { AppData } from '../types/app-data';
 import { HomeworksLessonsResponse } from '../types/homework';
 import { ProfileResponse } from '../types/profile';
@@ -83,6 +84,18 @@ export class ApiClient {
 
         return await this._httpClient.get<HomeworksLessonsResponse>(
             `/WebUntis/api/homeworks/lessons?${params}`,
+            { Cookie: cookies }
+        );
+    }
+
+    /**
+     * Fetch absences
+     */
+    async fetchAbsences(params: URLSearchParams): Promise<AbsencesStudentsResponse> {
+        const cookies = this._getCookies();
+
+        return await this._httpClient.get<AbsencesStudentsResponse>(
+            `/WebUntis/api/classreg/absences/students?${params}`,
             { Cookie: cookies }
         );
     }
