@@ -30,3 +30,7 @@ test("get profile data", async () => {
 test("get own timetable", async () => {
     await client.getOwnTimetable(new Date("2026-02-05"), new Date("2026-02-06"));
 });
+
+test("get homeworks and lessons", async () => {
+    await client.getHomeworksLessons(new Date("2025"), new Date("2026"));
+});

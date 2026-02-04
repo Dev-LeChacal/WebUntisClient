@@ -6,9 +6,11 @@ import { ValidationError } from "./errors/Validation";
 import { AuthenticationManager } from "./managers/Authentication";
 import { TokenManager } from "./managers/Token";
 import { AppDataService } from "./services/AppData";
+import { HomeworksService } from './services/Homeworks';
 import { ProfileService } from "./services/Profile";
 import { TimetableService } from "./services/Timetable";
 import { AppData, CurrentSchoolYear, Holiday, OneDriveData, Tenant, User } from './types/app-data';
+import { HomeworksLessonsData } from './types/homework';
 import { Profile } from "./types/profile";
 import { SessionInfo } from "./types/session";
 import { TimetableResponse } from "./types/timetable";
@@ -26,6 +28,7 @@ export class WebUntisClient {
     // Services
     private readonly _appDataService: AppDataService;
     private readonly _profileService: ProfileService;
+    private readonly _homeworksService: HomeworksService;
     private readonly _timetableService: TimetableService;
 
     constructor(credentials: Credentials) {
@@ -51,6 +54,7 @@ export class WebUntisClient {
         // Services
         this._appDataService = new AppDataService(this._apiClient);
         this._profileService = new ProfileService(this._apiClient);
+        this._homeworksService = new HomeworksService(this._apiClient);
 
         this._timetableService = new TimetableService(
             this._apiClient,
@@ -205,7 +209,6 @@ export class WebUntisClient {
         return this._appDataService.getHolidays();
     }
 
-//#endregion
     //#endregion
 
     //#region User's Profile
@@ -231,6 +234,15 @@ export class WebUntisClient {
     async getOwnTimetable(start: Date, end: Date): Promise<TimetableResponse> {
         this._ensureAuthenticated();
         return await this._timetableService.getOwnTimetable(start, end);
+    }
+
+    //#endregion
+
+    //#region Homeworks and Lessons
+
+    async getHomeworksLessons(start: Date, end: Date): Promise<HomeworksLessonsData> {
+        this._ensureAuthenticated();
+        return await this._homeworksService.getHomeworksLessons(start, end);
     }
 
     //#endregion

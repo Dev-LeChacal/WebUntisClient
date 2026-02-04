@@ -1,4 +1,5 @@
 import { AppData } from '../types/app-data';
+import { HomeworksLessonsResponse } from '../types/homework';
 import { ProfileResponse } from '../types/profile';
 import { TimetableResponse } from '../types/timetable';
 import { HttpClient } from './Http';
@@ -12,8 +13,9 @@ export class ApiClient {
         private readonly _getCookies: () => string,
         private readonly _getToken: () => Promise<string>,
         private readonly _getTenantId: () => string | null,
-        private readonly _getSchoolYearId: () => string,
-    ) { }
+        private readonly _getSchoolYearId: () => string
+    ) {
+    }
 
     /**
      * Fetch app data
@@ -32,7 +34,7 @@ export class ApiClient {
             {
                 Authorization: `Bearer ${token}`,
                 'tenant-id': tenantId,
-                Cookie: cookies,
+                Cookie: cookies
             }
         );
     }
@@ -68,8 +70,17 @@ export class ApiClient {
                 Authorization: `Bearer ${token}`,
                 'tenant-id': tenantId,
                 'x-webuntis-api-school-year-id': schoolYearId,
-                Cookie: cookies,
+                Cookie: cookies
             }
+        );
+    }
+
+    async fetchHomeworksLessons(params: URLSearchParams): Promise<HomeworksLessonsResponse> {
+        const cookies = this._getCookies();
+
+        return await this._httpClient.get<HomeworksLessonsResponse>(
+            `/WebUntis/api/homeworks/lessons?${params}`,
+            { Cookie: cookies }
         );
     }
 }

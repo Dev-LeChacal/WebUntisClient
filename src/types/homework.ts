@@ -1,0 +1,38 @@
+export interface HomeworkRecord {
+    homeworkId: number;
+    teacherId: number;
+    elementIds: number[];
+}
+
+export interface Homework {
+    id: number;
+    lessonId: number;
+    date: number;
+    dueDate: number;
+    text: string;
+    remark: string;
+    completed: boolean;
+    attachments: unknown[];
+}
+
+export interface Teacher {
+    id: number;
+    name: string;
+}
+
+export interface Lesson {
+    id: number;
+    subject: string;
+    lessonType: string;
+}
+
+export interface HomeworksLessonsData {
+    records: HomeworkRecord[];
+    homeworks: Homework[];
+    teachers: Teacher[];
+    lessons: Lesson[];
+}
+
+export interface HomeworksLessonsResponse {
+    data: HomeworksLessonsData;
+}
