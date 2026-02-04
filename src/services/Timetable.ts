@@ -1,7 +1,7 @@
 import { ApiClient } from '../clients/Api';
 import { AuthenticationError } from '../errors/Authentication';
 import { SessionInfo } from '../types/session';
-import { TimetableResponse } from '../types/timetable';
+import { ClassTimetableResponse, OwnTimetableResponse } from '../types/timetable';
 import { UtilsDate } from '../utils/date';
 
 /**
@@ -15,18 +15,33 @@ export class TimetableService {
     }
 
     /**
-     * Get timetable for date range
+     * Get own timetable for date range
      */
-    async getOwnTimetable(start: Date, end: Date): Promise<TimetableResponse> {
+    async getOwnTimetable(start: Date, end: Date): Promise<OwnTimetableResponse> {
         const session = this._getSession();
 
         if (!session?.personId) {
             throw new AuthenticationError('No active session or person ID');
         }
 
-        const params = this._buildTimetableParams(start, end, session.personId);
+        const params = this._buildTimetableParams(start, end, 'STUDENT', session.personId);
 
-        return await this._apiClient.fetchOwnTimetable(params);
+        return await this._apiClient.fetchTimetable<OwnTimetableResponse>(params);
+    }
+
+    /**
+     * Get timetable for date range
+     */
+    async getClassTimetable(start: Date, end: Date): Promise<ClassTimetableResponse> {
+        const session = this._getSession();
+
+        if (!session?.klasseId) {
+            throw new AuthenticationError('No active session or person ID');
+        }
+
+        const params = this._buildTimetableParams(start, end, 'CLASS', session.klasseId);
+
+        return await this._apiClient.fetchTimetable<ClassTimetableResponse>(params);
     }
 
     /**
@@ -35,19 +50,21 @@ export class TimetableService {
     private _buildTimetableParams(
         start: Date,
         end: Date,
+        resourceType: 'STUDENT' | 'CLASS',
         personId: number
     ): URLSearchParams {
         const startDate = UtilsDate.formatDate(start);
         const endDate = UtilsDate.formatDate(end);
+        const timetableType = resourceType === 'STUDENT' ? 'MY_TIMETABLE' : 'STANDARD';
 
         return new URLSearchParams({
             start: startDate,
             end: endDate,
             format: '4',
-            resourceType: 'STUDENT',
+            resourceType: resourceType,
             resources: personId.toString(),
             periodTypes: '',
-            timetableType: 'MY_TIMETABLE',
+            timetableType: timetableType,
             layout: 'START_TIME'
         });
     }

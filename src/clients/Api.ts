@@ -2,7 +2,6 @@ import { AbsencesStudentsResponse } from '../types/absences';
 import { AppData } from '../types/app-data';
 import { HomeworksLessonsResponse } from '../types/homework';
 import { ProfileResponse } from '../types/profile';
-import { TimetableResponse } from '../types/timetable';
 import { HttpClient } from './Http';
 
 /**
@@ -55,7 +54,7 @@ export class ApiClient {
     /**
      * Fetch timetable entries
      */
-    async fetchOwnTimetable(params: URLSearchParams): Promise<TimetableResponse> {
+    async fetchTimetable<T>(params: URLSearchParams): Promise<T> {
         const token = await this._getToken();
         const tenantId = this._getTenantId();
         const cookies = this._getCookies();
@@ -65,7 +64,7 @@ export class ApiClient {
             throw new Error('Tenant ID not available');
         }
 
-        return await this._httpClient.get<TimetableResponse>(
+        return await this._httpClient.get<T>(
             `/WebUntis/api/rest/view/v1/timetable/entries?${params}`,
             {
                 Authorization: `Bearer ${token}`,

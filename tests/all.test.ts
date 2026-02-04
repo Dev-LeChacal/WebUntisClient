@@ -31,6 +31,10 @@ test('get own timetable', async () => {
     await client.getOwnTimetable(new Date('2026-02-05'), new Date('2026-02-06'));
 });
 
+test('get class timetable', async () => {
+    await client.getClassTimetable(new Date('2026-02-05'), new Date('2026-02-06'));
+});
+
 test('get homeworks and lessons', async () => {
     await client.getHomeworksLessons(new Date('2025'), new Date('2026'));
 });
