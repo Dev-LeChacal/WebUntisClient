@@ -226,9 +226,9 @@ export class WebUntisClient {
      * @param start - Start date
      * @param end - End date
      */
-    async getTimetable(start: Date, end: Date): Promise<TimetableResponse> {
+    async getOwnTimetable(start: Date, end: Date): Promise<TimetableResponse> {
         this._ensureAuthenticated();
-        return await this._timetableService.getTimetable(start, end);
+        return await this._timetableService.getOwnTimetable(start, end);
     }
 
     //#endregion

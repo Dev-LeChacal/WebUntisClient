@@ -28,5 +28,5 @@ test("get profile data", async () => {
 });
 
 test("get own timetable", async () => {
-    await client.getTimetable(new Date("2026-02-05"), new Date("2026-02-06"));
+    await client.getOwnTimetable(new Date("2026-02-05"), new Date("2026-02-06"));
 });

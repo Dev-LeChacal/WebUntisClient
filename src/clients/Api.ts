@@ -52,7 +52,7 @@ export class ApiClient {
     /**
      * Fetch timetable entries
      */
-    async fetchTimetable(
+    async fetchOwnTimetable(
         params: URLSearchParams,
     ): Promise<TimetableResponse> {
         const token = await this._getToken();

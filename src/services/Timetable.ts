@@ -15,7 +15,7 @@ export class TimetableService {
     /**
      * Get timetable for date range
      */
-    async getTimetable(start: Date, end: Date): Promise<TimetableResponse> {
+    async getOwnTimetable(start: Date, end: Date): Promise<TimetableResponse> {
         const session = this._authManager.getSession();
 
         if (!session?.personId) {
@@ -24,7 +24,7 @@ export class TimetableService {
 
         const params = this._buildTimetableParams(start, end, session.personId);
 
-        return await this._apiClient.fetchTimetable(params);
+        return await this._apiClient.fetchOwnTimetable(params);
     }
 
     /**
