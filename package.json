@@ -3,9 +3,13 @@
     "version": "1.0.0",
     "description": "A Web Untis API Client",
 
-    "main": "dist/webuntis-client.js",
-    "module": "dist/webuntis-client.mjs",
-    "typings": "dist/webuntis-client.d.ts",
+    "main": "dist/index.js",
+    "module": "dist/index.js",
+    "typings": "dist/index.d.ts",
+
+    "scripts": {
+        "build": "tsc"
+    },
 
     "repository": {
         "type": "git",
