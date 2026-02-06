@@ -15,7 +15,8 @@ import { AppData, CurrentSchoolYear, Holiday, OneDriveData, Tenant, User } from 
 import { HomeworksLessonsData } from "./types/homeworks/homeworks";
 import { Profile } from "./types/profile/profile";
 import { SessionInfo } from "./types/session/session";
-import { ClassTimetableEntries, OwnTimetableEntries } from "./types/timetable/timetable";
+import { TimetableDay } from "./types/timetable/day";
+import { ClassTimetableEntries } from "./types/timetable/timetable";
 
 export class WebUntisClient {
     // Clients
@@ -260,7 +261,7 @@ export class WebUntisClient {
      * @param start - Start date
      * @param end - End date
      */
-    async getOwnTimetable(start: Date, end: Date): Promise<OwnTimetableEntries> {
+    async getOwnTimetable(start: Date, end: Date): Promise<TimetableDay[]> {
         this._ensureAuthenticated();
         return await this._timetableService.getOwnTimetable(start, end);
     }

@@ -1,6 +1,8 @@
 import { ApiClient } from "../clients/Api";
 import { AuthenticationError } from "../errors/Authentication";
 import { SessionInfo } from "../types/session/session";
+import { Course, CoursePosition } from "../types/timetable/course";
+import { TimetableDay } from "../types/timetable/day";
 import { ClassTimetableEntries, OwnTimetableEntries } from "../types/timetable/timetable";
 import { UtilsDate } from "../utils/date";
 
@@ -17,7 +19,7 @@ export class TimetableService {
     /**
      * Get own timetable for date range
      */
-    async getOwnTimetable(start: Date, end: Date): Promise<OwnTimetableEntries> {
+    async getOwnTimetable(start: Date, end: Date): Promise<TimetableDay[]> {
         const session = this._getSession();
 
         if (!session?.personId) {
@@ -27,8 +29,72 @@ export class TimetableService {
         const entriesParams = this._buildTimetableEntriesParams(start, end, true, session.personId);
 
         const entries = await this._apiClient.fetchTimetableEntries<OwnTimetableEntries>(entriesParams);
+        const days = entries.days;
 
-        return entries;
+        const timetableDays: TimetableDay[] = [];
+
+        for (const day of days) {
+            const date = UtilsDate.fromUntisDate(day.date, "YYYY-MM-DD");
+            const courses: Course[] = [];
+
+            for (const entry of day.gridEntries) {
+                const from = new Date(entry.duration.start);
+                const to = new Date(entry.duration.end);
+
+                const status = entry.status;
+                const type = entry.type;
+                const color = entry.color;
+
+                const teacher = new CoursePosition(
+                    entry.position1[0].current.type,
+                    entry.position1[0].current.status,
+                    entry.position1[0].current.shortName,
+                    entry.position1[0].current.longName,
+                    entry.position1[0].current.displayName
+                );
+
+                const subject = new CoursePosition(
+                    entry.position2[0].current.type,
+                    entry.position2[0].current.status,
+                    entry.position2[0].current.shortName,
+                    entry.position2[0].current.longName,
+                    entry.position2[0].current.displayName
+                );
+
+                const room = new CoursePosition(
+                    entry.position3[0].current.type,
+                    entry.position3[0].current.status,
+                    entry.position3[0].current.shortName,
+                    entry.position3[0].current.longName,
+                    entry.position3[0].current.displayName
+                );
+
+                const course = new Course(
+                    from,
+                    to,
+                    status,
+                    type,
+                    color,
+                    teacher,
+                    subject,
+                    room
+                );
+
+                courses.push(course);
+            }
+
+            const timetableDay = new TimetableDay(
+                day.status,
+                date,
+                [],
+                courses,
+                []
+            );
+
+            timetableDays.push(timetableDay);
+        }
+
+        return timetableDays;
     }
 
     /**

@@ -1,0 +1,1 @@
+export type TimetableStatus = "REGULAR" | string;
