@@ -37,21 +37,21 @@ export class AuthenticationManager {
             throw new AuthenticationError("Not authenticated");
         }
 
-        const { schoolBase64 } = this._credentials;
+        const { SchoolBase64 } = this._credentials;
 
-        return `JSESSIONID=${this._session.sessionId}; schoolname=${schoolBase64}`;
+        return `JSESSIONID=${this._session.sessionId}; schoolname=${SchoolBase64}`;
     }
 
     /**
      * Login
      */
     async login(): Promise<SessionInfo> {
-        const { username, password, identity } = this._credentials;
+        const { Username, Password, Identity } = this._credentials;
 
         this._session = await this._rpc.authenticate(
-            username,
-            password,
-            identity
+            Username,
+            Password,
+            Identity
         );
 
         return this._session;

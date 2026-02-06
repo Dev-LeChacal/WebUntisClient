@@ -1,38 +1,38 @@
 export class Credentials {
-    private readonly _url: string;
-    private readonly _schoolBase64: string;
+    private readonly url: string;
+    private readonly schoolBase64: string;
 
     constructor(
-        private readonly _identity: string,
-        private readonly _school: string,
-        private readonly _username: string,
-        private readonly _password: string,
+        private readonly identity: string,
+        private readonly school: string,
+        private readonly username: string,
+        private readonly password: string
     ) {
-        this._url = `https://${_school}.webuntis.com`;
-        this._schoolBase64 = "_" + Buffer.from(_school).toString("base64");
+        this.url = `https://${school}.webuntis.com`;
+        this.schoolBase64 = "_" + Buffer.from(school).toString("base64");
     }
 
-    get identity(): string {
-        return this._identity;
+    get Identity(): string {
+        return this.identity;
     }
 
-    get school(): string {
-        return this._school;
+    get School(): string {
+        return this.school;
     }
 
-    get username(): string {
-        return this._username;
+    get Username(): string {
+        return this.username;
     }
 
-    get password(): string {
-        return this._password;
+    get Password(): string {
+        return this.password;
     }
 
-    get url(): string {
-        return this._url;
+    get URL(): string {
+        return this.url;
     }
 
-    get schoolBase64(): string {
-        return this._schoolBase64;
+    get SchoolBase64(): string {
+        return this.schoolBase64;
     }
 }

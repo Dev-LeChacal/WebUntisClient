@@ -36,11 +36,11 @@ export class WebUntisClient {
     private readonly _absencesService: AbsencesService;
 
     constructor(credentials: Credentials) {
-        const { identity, url } = credentials;
+        const { Identity, URL } = credentials;
 
         // Clients
-        this._httpClient = new HttpClient(url);
-        this._rpcClient = new JsonRpcClient(identity, url);
+        this._httpClient = new HttpClient(URL);
+        this._rpcClient = new JsonRpcClient(Identity, URL);
 
         // Managers
         this._authManager = new AuthenticationManager(credentials, this._rpcClient);
