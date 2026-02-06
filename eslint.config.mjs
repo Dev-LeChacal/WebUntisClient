@@ -10,11 +10,11 @@ export default [
     {
         files: ['**/*.{js,mjs,cjs,ts,mts,cts}'],
         languageOptions: {
-            globals: globals.node,
+            globals: globals.node
         },
         plugins: {
             'simple-import-sort': simpleImportSort,
-            'unused-imports': unusedImports,
+            'unused-imports': unusedImports
         },
         rules: {
             'no-duplicate-imports': 'error',
@@ -46,18 +46,9 @@ export default [
                     vars: 'all',
                     varsIgnorePattern: '^_',
                     args: 'after-used',
-                    argsIgnorePattern: '^_',
-                },
-            ],
-            '@typescript-eslint/naming-convention': [
-                'error',
-                {
-                    selector: ['property', 'method', 'accessor'],
-                    modifiers: ['private'],
-                    format: ['camelCase'],
-                    leadingUnderscore: 'require',
-                },
-            ],
-        },
-    },
+                    argsIgnorePattern: '^_'
+                }
+            ]
+        }
+    }
 ];
