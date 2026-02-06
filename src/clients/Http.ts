@@ -1,15 +1,15 @@
-
 import { NetworkError } from "../errors/Network";
 
 export class HttpClient {
     private readonly _defaultHeaders: Record<string, string> = {
-        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.79 Safari/537.36',
-        'Cache-Control': 'no-cache',
-        'X-Requested-With': 'XMLHttpRequest',
-        Pragma: 'no-cache',
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.79 Safari/537.36",
+        "Cache-Control": "no-cache",
+        "X-Requested-With": "XMLHttpRequest",
+        Pragma: "no-cache"
     };
 
-    constructor(private readonly _url: string) { }
+    constructor(private readonly url: string) {
+    }
 
     /**
      * Make a GET request
@@ -19,13 +19,13 @@ export class HttpClient {
         headers?: Record<string, string>
     ): Promise<T> {
         const response = await fetch(
-            `${this._url}${endpoint}`,
+            `${this.url}${endpoint}`,
             {
-                method: 'GET',
+                method: "GET",
                 headers: {
                     ...this._defaultHeaders,
-                    ...headers,
-                },
+                    ...headers
+                }
             }
         );
 
@@ -41,16 +41,16 @@ export class HttpClient {
         headers?: Record<string, string>
     ): Promise<T> {
         const response = await fetch(
-            `${this._url}${endpoint}`,
+            `${this.url}${endpoint}`,
             {
-                method: 'POST',
+                method: "POST",
                 headers: {
                     ...this._defaultHeaders,
-                    'Content-Type': 'application/json',
-                    ...headers,
+                    "Content-Type": "application/json",
+                    ...headers
                 },
                 body: body ? JSON.stringify(body) : undefined,
-                redirect: 'manual',
+                redirect: "manual"
             }
         );
 
@@ -65,13 +65,13 @@ export class HttpClient {
         headers?: Record<string, string>
     ): Promise<string> {
         const response = await fetch(
-            `${this._url}${endpoint}`,
+            `${this.url}${endpoint}`,
             {
-                method: 'GET',
+                method: "GET",
                 headers: {
                     ...this._defaultHeaders,
-                    ...headers,
-                },
+                    ...headers
+                }
             }
         );
 
@@ -96,9 +96,9 @@ export class HttpClient {
             );
         }
 
-        const contentType = response.headers.get('content-type');
+        const contentType = response.headers.get("content-type");
 
-        if (contentType?.includes('application/json')) {
+        if (contentType?.includes("application/json")) {
             return await response.json();
         }
 

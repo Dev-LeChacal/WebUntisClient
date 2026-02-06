@@ -7,11 +7,11 @@ import { SessionInfo } from "../types/session/session";
  * Manages authentication state and session cookies
  */
 export class AuthenticationManager {
-    private _session: SessionInfo | null = null;
+    private session: SessionInfo | null = null;
 
     constructor(
-        private readonly _credentials: Credentials,
-        private readonly _rpc: JsonRpcClient
+        private readonly credentials: Credentials,
+        private readonly rpcClient: JsonRpcClient
     ) {
     }
 
@@ -19,42 +19,42 @@ export class AuthenticationManager {
      * Check if user is authenticated
      */
     isAuthenticated(): boolean {
-        return this._session !== null && !!this._session.sessionId;
+        return this.session !== null && !!this.session.sessionId;
     }
 
     /**
      * Get current session info
      */
     getSession(): SessionInfo | null {
-        return this._session;
+        return this.session;
     }
 
     /**
      * Get session cookies
      */
     getCookies(): string {
-        if (!this._session?.sessionId) {
+        if (!this.session?.sessionId) {
             throw new AuthenticationError("Not authenticated");
         }
 
-        const { SchoolBase64 } = this._credentials;
+        const { SchoolBase64 } = this.credentials;
 
-        return `JSESSIONID=${this._session.sessionId}; schoolname=${SchoolBase64}`;
+        return `JSESSIONID=${this.session.sessionId}; schoolname=${SchoolBase64}`;
     }
 
     /**
      * Login
      */
     async login(): Promise<SessionInfo> {
-        const { Username, Password, Identity } = this._credentials;
+        const { Username, Password, Identity } = this.credentials;
 
-        this._session = await this._rpc.authenticate(
+        this.session = await this.rpcClient.authenticate(
             Username,
             Password,
             Identity
         );
 
-        return this._session;
+        return this.session;
     }
 
     /**
@@ -69,7 +69,7 @@ export class AuthenticationManager {
 
         try {
             const cookies = this.getCookies();
-            await this._rpc.logout(cookies);
+            await this.rpcClient.logout(cookies);
         } finally {
             this.clearSession();
         }
@@ -79,6 +79,6 @@ export class AuthenticationManager {
      * Clear session (without calling logout endpoint)
      */
     clearSession(): void {
-        this._session = null;
+        this.session = null;
     }
 }

@@ -7,14 +7,14 @@ import { HttpClient } from "./Http";
  * JSON-RPC client for WebUntis API
  */
 export class JsonRpcClient {
-    private readonly _httpClient: HttpClient;
-    private readonly _endpoint = "/WebUntis/jsonrpc.do";
+    private readonly httpClient: HttpClient;
+    private readonly endpoint = "/WebUntis/jsonrpc.do";
 
     constructor(
-        private readonly _identity: string,
+        private readonly identity: string,
         url: string
     ) {
-        this._httpClient = new HttpClient(url);
+        this.httpClient = new HttpClient(url);
     }
 
     /**
@@ -71,14 +71,14 @@ export class JsonRpcClient {
         }
 
         const body = {
-            id: this._identity,
+            id: this.identity,
             jsonrpc: "2.0",
             method,
             params
         };
 
-        const response = await this._httpClient.post<JsonRpcResponse<Result>>(
-            this._endpoint,
+        const response = await this.httpClient.post<JsonRpcResponse<Result>>(
+            this.endpoint,
             body,
             headers
         );

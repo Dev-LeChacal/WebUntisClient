@@ -9,11 +9,11 @@ import { HttpClient } from "./Http";
  */
 export class ApiClient {
     constructor(
-        private readonly _httpClient: HttpClient,
-        private readonly _getCookies: () => string,
-        private readonly _getToken: () => Promise<string>,
-        private readonly _getTenantId: () => string | null,
-        private readonly _getSchoolYearId: () => string
+        private readonly httpClient: HttpClient,
+        private readonly getCookies: () => string,
+        private readonly getToken: () => Promise<string>,
+        private readonly getTenantId: () => string | null,
+        private readonly getSchoolYearId: () => string
     ) {
     }
 
@@ -21,15 +21,15 @@ export class ApiClient {
      * Fetch app data
      */
     async fetchAppData(): Promise<AppData> {
-        const token = await this._getToken();
-        const tenantId = this._getTenantId();
-        const cookies = this._getCookies();
+        const token = await this.getToken();
+        const tenantId = this.getTenantId();
+        const cookies = this.getCookies();
 
         if (!tenantId) {
             throw new Error("Tenant ID not available");
         }
 
-        return this._httpClient.get<AppData>(
+        return this.httpClient.get<AppData>(
             "/WebUntis/api/rest/view/v1/app/data",
             {
                 Authorization: `Bearer ${token}`,
@@ -43,9 +43,9 @@ export class ApiClient {
      * Fetch user profile data
      */
     async fetchProfile(): Promise<ProfileResponse> {
-        const cookies = this._getCookies();
+        const cookies = this.getCookies();
 
-        return this._httpClient.get<ProfileResponse>(
+        return this.httpClient.get<ProfileResponse>(
             "/WebUntis/api/profile/general",
             { Cookie: cookies }
         );
@@ -55,16 +55,16 @@ export class ApiClient {
      * Fetch timetable entries
      */
     async fetchTimetableEntries<T>(params: URLSearchParams): Promise<T> {
-        const token = await this._getToken();
-        const tenantId = this._getTenantId();
-        const cookies = this._getCookies();
-        const schoolYearId = this._getSchoolYearId();
+        const token = await this.getToken();
+        const tenantId = this.getTenantId();
+        const cookies = this.getCookies();
+        const schoolYearId = this.getSchoolYearId();
 
         if (!tenantId) {
             throw new Error("Tenant ID not available");
         }
 
-        return await this._httpClient.get<T>(
+        return await this.httpClient.get<T>(
             `/WebUntis/api/rest/view/v1/timetable/entries?${params}`,
             {
                 Authorization: `Bearer ${token}`,
@@ -79,9 +79,9 @@ export class ApiClient {
      * Fetch homeworks and lessons
      */
     async fetchHomeworksLessons(params: URLSearchParams): Promise<HomeworksLessonsResponse> {
-        const cookies = this._getCookies();
+        const cookies = this.getCookies();
 
-        return await this._httpClient.get<HomeworksLessonsResponse>(
+        return await this.httpClient.get<HomeworksLessonsResponse>(
             `/WebUntis/api/homeworks/lessons?${params}`,
             { Cookie: cookies }
         );
@@ -91,9 +91,9 @@ export class ApiClient {
      * Fetch absences
      */
     async fetchAbsences(params: URLSearchParams): Promise<AbsencesStudentsResponse> {
-        const cookies = this._getCookies();
+        const cookies = this.getCookies();
 
-        return await this._httpClient.get<AbsencesStudentsResponse>(
+        return await this.httpClient.get<AbsencesStudentsResponse>(
             `/WebUntis/api/classreg/absences/students?${params}`,
             { Cookie: cookies }
         );
