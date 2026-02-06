@@ -1,11 +1,12 @@
-import { ApiClient } from '../clients/Api';
-import { Profile } from '../types/profile';
+import { ApiClient } from "../clients/Api";
+import { Profile } from "../types/profile/profile";
 
 /**
  * Service for managing user profile data
  */
 export class ProfileService {
-    constructor(private readonly _apiClient: ApiClient) { }
+    constructor(private readonly _apiClient: ApiClient) {
+    }
 
     /**
      * Get current user's profile

@@ -4,7 +4,7 @@ export interface HomeworkRecord {
     elementIds: number[];
 }
 
-export interface Homework {
+export interface Homeworks {
     id: number;
     lessonId: number;
     date: number;
@@ -28,7 +28,7 @@ export interface Lesson {
 
 export interface HomeworksLessonsData {
     records: HomeworkRecord[];
-    homeworks: Homework[];
+    homeworks: Homeworks[];
     teachers: Teacher[];
     lessons: Lesson[];
 }

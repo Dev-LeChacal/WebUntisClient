@@ -1,7 +1,7 @@
 import { JsonRpcClient } from "../clients/JsonRpc";
 import { Credentials } from "../Credentials";
 import { AuthenticationError } from "../errors/Authentication";
-import { SessionInfo } from "../types/session";
+import { SessionInfo } from "../types/session/session";
 
 /**
  * Manages authentication state and session cookies
@@ -12,7 +12,8 @@ export class AuthenticationManager {
     constructor(
         private readonly _credentials: Credentials,
         private readonly _rpc: JsonRpcClient
-    ) { }
+    ) {
+    }
 
     /**
      * Check if user is authenticated
@@ -33,7 +34,7 @@ export class AuthenticationManager {
      */
     getCookies(): string {
         if (!this._session?.sessionId) {
-            throw new AuthenticationError('Not authenticated');
+            throw new AuthenticationError("Not authenticated");
         }
 
         const { schoolBase64 } = this._credentials;
@@ -62,7 +63,9 @@ export class AuthenticationManager {
     async logout(): Promise<void> {
         const hasSession = this.isAuthenticated();
 
-        if (!hasSession) { return; }
+        if (!hasSession) {
+            return;
+        }
 
         try {
             const cookies = this.getCookies();

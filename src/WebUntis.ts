@@ -1,21 +1,21 @@
-import { ApiClient } from './clients/Api';
-import { HttpClient } from './clients/Http';
-import { JsonRpcClient } from './clients/JsonRpc';
-import { Credentials } from './Credentials';
-import { ValidationError } from './errors/Validation';
-import { AuthenticationManager } from './managers/Authentication';
-import { TokenManager } from './managers/Token';
-import { AbsencesService } from './services/Absences';
-import { AppDataService } from './services/AppData';
-import { HomeworksService } from './services/Homeworks';
-import { ProfileService } from './services/Profile';
-import { TimetableService } from './services/Timetable';
-import { AbsencesStudentsData } from './types/absences';
-import { AppData, CurrentSchoolYear, Holiday, OneDriveData, Tenant, User } from './types/app-data';
-import { HomeworksLessonsData } from './types/homework';
-import { Profile } from './types/profile';
-import { SessionInfo } from './types/session';
-import { ClassTimetableResponse, OwnTimetableResponse } from './types/timetable';
+import { ApiClient } from "./clients/Api";
+import { HttpClient } from "./clients/Http";
+import { JsonRpcClient } from "./clients/JsonRpc";
+import { Credentials } from "./Credentials";
+import { ValidationError } from "./errors/Validation";
+import { AuthenticationManager } from "./managers/Authentication";
+import { TokenManager } from "./managers/Token";
+import { AbsencesService } from "./services/Absences";
+import { AppDataService } from "./services/AppData";
+import { HomeworksService } from "./services/Homeworks";
+import { ProfileService } from "./services/Profile";
+import { TimetableService } from "./services/Timetable";
+import { AbsencesStudentsData } from "./types/absences/absences";
+import { AppData, CurrentSchoolYear, Holiday, OneDriveData, Tenant, User } from "./types/app-data/app-data";
+import { HomeworksLessonsData } from "./types/homeworks/homeworks";
+import { Profile } from "./types/profile/profile";
+import { SessionInfo } from "./types/session/session";
+import { ClassTimetableEntries, OwnTimetableEntries } from "./types/timetable/timetable";
 
 export class WebUntisClient {
     // Clients
@@ -260,7 +260,7 @@ export class WebUntisClient {
      * @param start - Start date
      * @param end - End date
      */
-    async getOwnTimetable(start: Date, end: Date): Promise<OwnTimetableResponse> {
+    async getOwnTimetable(start: Date, end: Date): Promise<OwnTimetableEntries> {
         this._ensureAuthenticated();
         return await this._timetableService.getOwnTimetable(start, end);
     }
@@ -271,7 +271,7 @@ export class WebUntisClient {
      * @param start - Start date
      * @param end - End date
      */
-    async getClassTimetable(start: Date, end: Date): Promise<ClassTimetableResponse> {
+    async getClassTimetable(start: Date, end: Date): Promise<ClassTimetableEntries> {
         this._ensureAuthenticated();
         return await this._timetableService.getClassTimetable(start, end);
     }
@@ -317,7 +317,7 @@ export class WebUntisClient {
         const isNotAuthenticated = !this._authManager.isAuthenticated();
 
         if (isNotAuthenticated) {
-            throw new ValidationError('Not authenticated. Please call login() first.');
+            throw new ValidationError("Not authenticated. Please call login() first.");
         }
     }
 

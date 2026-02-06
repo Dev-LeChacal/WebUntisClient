@@ -1,6 +1,6 @@
-import { ApiClient } from '../clients/Api';
-import { ValidationError } from '../errors/Validation';
-import { AppData, CurrentSchoolYear, Holiday, OneDriveData, Tenant, User } from '../types/app-data';
+import { ApiClient } from "../clients/Api";
+import { ValidationError } from "../errors/Validation";
+import { AppData, CurrentSchoolYear, Holiday, OneDriveData, Tenant, User } from "../types/app-data/app-data";
 
 /**
  * Service for fetching app data
@@ -172,7 +172,7 @@ export class AppDataService {
 
     private _ensureHasData(): void {
         if (this._data === null) {
-            throw new ValidationError('Data was not found. Please call getAppData() first.');
+            throw new ValidationError("Data was not found. Please call getAppData() first.");
         }
     }
 

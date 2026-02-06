@@ -86,7 +86,7 @@ export interface OwnDay {
     backEntries: OwnBackEntry[];
 }
 
-export interface OwnTimetableResponse {
+export interface OwnTimetableEntries {
     format: number;
     days: OwnDay[];
     errors: unknown[];
@@ -154,8 +154,41 @@ export interface ClassDay {
     backEntries: ClassBackEntry[];
 }
 
-export interface ClassTimetableResponse {
+export interface ClassTimetableEntries {
     format: number;
     days: ClassDay[];
     errors: unknown[];
+}
+
+export interface TimeGridSlot {
+    name: string | null;
+    number: number | null;
+    duration: Duration;
+}
+
+export interface FormatDefinition {
+    id: number;
+    name: string;
+    longname: string;
+    showStartEndTimeOfSlots: boolean;
+    showStartEndTime: boolean;
+    showCancellations: boolean;
+    showExternalCalendars: boolean;
+    hideDetails: boolean;
+    minRows: number;
+    duration: Duration;
+    timeGridType: 'LESSON_GRID' | string;
+    timeGridDays: string[];
+    timeGridSlots: TimeGridSlot[];
+}
+
+export interface OwnTimetableGrid {
+    firstDayOfWeek: string;
+    studentFormat: number;
+    classFormat: number;
+    subjectFormat: number;
+    teacherFormat: number;
+    roomFormat: number;
+    resourceFormat: number;
+    formatDefinitions: FormatDefinition[];
 }

@@ -1,6 +1,6 @@
-import { ApiClient } from '../clients/Api';
-import { HomeworksLessonsData } from '../types/homework';
-import { UtilsDate } from '../utils/date';
+import { ApiClient } from "../clients/Api";
+import { HomeworksLessonsData } from "../types/homeworks/homeworks";
+import { UtilsDate } from "../utils/date";
 
 /**
  * Service for managing homeworks
@@ -25,8 +25,8 @@ export class HomeworksService {
         start: Date,
         end: Date
     ): URLSearchParams {
-        const startDate = UtilsDate.toUntisDate(start, 'YYYYMMDD');
-        const endDate = UtilsDate.toUntisDate(end, 'YYYYMMDD');
+        const startDate = UtilsDate.toUntisDate(start, "YYYYMMDD");
+        const endDate = UtilsDate.toUntisDate(end, "YYYYMMDD");
 
         return new URLSearchParams({
             startDate: startDate,

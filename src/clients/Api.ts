@@ -1,8 +1,8 @@
-import { AbsencesStudentsResponse } from '../types/absences';
-import { AppData } from '../types/app-data';
-import { HomeworksLessonsResponse } from '../types/homework';
-import { ProfileResponse } from '../types/profile';
-import { HttpClient } from './Http';
+import { AbsencesStudentsResponse } from "../types/absences/absences";
+import { AppData } from "../types/app-data/app-data";
+import { HomeworksLessonsResponse } from "../types/homeworks/homeworks";
+import { ProfileResponse } from "../types/profile/profile";
+import { HttpClient } from "./Http";
 
 /**
  * Client for WebUntis REST API endpoints
@@ -26,14 +26,14 @@ export class ApiClient {
         const cookies = this._getCookies();
 
         if (!tenantId) {
-            throw new Error('Tenant ID not available');
+            throw new Error("Tenant ID not available");
         }
 
         return this._httpClient.get<AppData>(
-            '/WebUntis/api/rest/view/v1/app/data',
+            "/WebUntis/api/rest/view/v1/app/data",
             {
                 Authorization: `Bearer ${token}`,
-                'tenant-id': tenantId,
+                "tenant-id": tenantId,
                 Cookie: cookies
             }
         );
@@ -46,7 +46,7 @@ export class ApiClient {
         const cookies = this._getCookies();
 
         return this._httpClient.get<ProfileResponse>(
-            '/WebUntis/api/profile/general',
+            "/WebUntis/api/profile/general",
             { Cookie: cookies }
         );
     }
@@ -54,22 +54,46 @@ export class ApiClient {
     /**
      * Fetch timetable entries
      */
-    async fetchTimetable<T>(params: URLSearchParams): Promise<T> {
+    async fetchTimetableEntries<T>(params: URLSearchParams): Promise<T> {
         const token = await this._getToken();
         const tenantId = this._getTenantId();
         const cookies = this._getCookies();
         const schoolYearId = this._getSchoolYearId();
 
         if (!tenantId) {
-            throw new Error('Tenant ID not available');
+            throw new Error("Tenant ID not available");
         }
 
         return await this._httpClient.get<T>(
             `/WebUntis/api/rest/view/v1/timetable/entries?${params}`,
             {
                 Authorization: `Bearer ${token}`,
-                'tenant-id': tenantId,
-                'x-webuntis-api-school-year-id': schoolYearId,
+                "tenant-id": tenantId,
+                "x-webuntis-api-school-year-id": schoolYearId,
+                Cookie: cookies
+            }
+        );
+    }
+
+    /**
+     * Fetch timetable grid
+     */
+    async fetchTimetableGrid<T>(params: URLSearchParams): Promise<T> {
+        const token = await this._getToken();
+        const tenantId = this._getTenantId();
+        const cookies = this._getCookies();
+        const schoolYearId = this._getSchoolYearId();
+
+        if (!tenantId) {
+            throw new Error("Tenant ID not available");
+        }
+
+        return await this._httpClient.get<T>(
+            `/WebUntis/api/rest/view/v1/timetable/grid?${params}`,
+            {
+                Authorization: `Bearer ${token}`,
+                "tenant-id": tenantId,
+                "x-webuntis-api-school-year-id": schoolYearId,
                 Cookie: cookies
             }
         );

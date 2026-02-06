@@ -1,14 +1,14 @@
-import { AuthenticationError } from '../errors/Authentication';
-import { JsonRpcResponse } from '../types/jsonrpc';
-import { SessionInfo } from '../types/session';
-import { HttpClient } from './Http';
+import { AuthenticationError } from "../errors/Authentication";
+import { JsonRpcResponse } from "../types/json-rpc/json-rpc";
+import { SessionInfo } from "../types/session/session";
+import { HttpClient } from "./Http";
 
 /**
  * JSON-RPC client for WebUntis API
  */
 export class JsonRpcClient {
     private readonly _httpClient: HttpClient;
-    private readonly _endpoint = '/WebUntis/jsonrpc.do';
+    private readonly _endpoint = "/WebUntis/jsonrpc.do";
 
     constructor(
         private readonly _identity: string,
@@ -26,14 +26,14 @@ export class JsonRpcClient {
         client: string
     ): Promise<SessionInfo> {
         try {
-            const result = await this._call<SessionInfo>('authenticate', {
+            const result = await this._call<SessionInfo>("authenticate", {
                 user: username,
                 password: password,
-                client: client,
+                client: client
             });
 
             if (!result.sessionId) {
-                throw new AuthenticationError('Authentication failed: No session ID returned');
+                throw new AuthenticationError("Authentication failed: No session ID returned");
             }
 
             return result;
@@ -44,7 +44,7 @@ export class JsonRpcClient {
             }
 
             throw new AuthenticationError(
-                `Authentication failed: ${error instanceof Error ? error.message : 'Unknown error'}`
+                `Authentication failed: ${error instanceof Error ? error.message : "Unknown error"}`
             );
         }
     }
@@ -53,7 +53,7 @@ export class JsonRpcClient {
      * Logout and end session
      */
     async logout(cookies: string): Promise<void> {
-        await this._call('logout', {}, cookies);
+        await this._call("logout", {}, cookies);
     }
 
     /**
@@ -72,9 +72,9 @@ export class JsonRpcClient {
 
         const body = {
             id: this._identity,
-            jsonrpc: '2.0',
+            jsonrpc: "2.0",
             method,
-            params,
+            params
         };
 
         const response = await this._httpClient.post<JsonRpcResponse<Result>>(
@@ -86,7 +86,7 @@ export class JsonRpcClient {
         if (response.error) {
             throw new AuthenticationError(
                 `${response.error.message} (${response.error.code})`,
-                response.error.code.toString(),
+                response.error.code.toString()
             );
         }
 
