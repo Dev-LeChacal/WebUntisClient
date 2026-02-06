@@ -1,7 +1,7 @@
 import { ApiClient } from "../clients/Api";
 import { AuthenticationError } from "../errors/Authentication";
 import { SessionInfo } from "../types/session/session";
-import { ClassTimetableEntries, OwnTimetableEntries, OwnTimetableGrid } from "../types/timetable/timetable";
+import { ClassTimetableEntries, OwnTimetableEntries } from "../types/timetable/timetable";
 import { UtilsDate } from "../utils/date";
 
 /**
@@ -25,15 +25,8 @@ export class TimetableService {
         }
 
         const entriesParams = this._buildTimetableEntriesParams(start, end, true, session.personId);
-        const gridParams = this._buildTimetableGridParams(true);
 
         const entries = await this._apiClient.fetchTimetableEntries<OwnTimetableEntries>(entriesParams);
-        const grid = await this._apiClient.fetchTimetableGrid<OwnTimetableGrid>(gridParams);
-
-        const timeGridSlots = grid.formatDefinitions[0].timeGridSlots;
-        const firstDayOfWeek = entries.days[0];
-
-        console.log(firstDayOfWeek);
 
         return entries;
     }
@@ -49,11 +42,10 @@ export class TimetableService {
         }
 
         const entriesParams = this._buildTimetableEntriesParams(start, end, false, session.klasseId);
-        const gridParams = this._buildTimetableGridParams(false);
 
-        const response = await this._apiClient.fetchTimetableEntries<ClassTimetableEntries>(entriesParams);
+        const entries = await this._apiClient.fetchTimetableEntries<ClassTimetableEntries>(entriesParams);
 
-        return response;
+        return entries;
     }
 
     /**
@@ -80,17 +72,6 @@ export class TimetableService {
             periodTypes: "",
             timetableType: timetableType,
             layout: "START_TIME"
-        });
-    }
-
-    /**
-     * Build query parameters for timetable grid request
-     */
-    private _buildTimetableGridParams(isStudent: boolean): URLSearchParams {
-        const timetableType = isStudent ? "MY_TIMETABLE" : "STANDARD";
-
-        return new URLSearchParams({
-            timetableType: timetableType
         });
     }
 }

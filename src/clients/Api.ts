@@ -76,30 +76,6 @@ export class ApiClient {
     }
 
     /**
-     * Fetch timetable grid
-     */
-    async fetchTimetableGrid<T>(params: URLSearchParams): Promise<T> {
-        const token = await this._getToken();
-        const tenantId = this._getTenantId();
-        const cookies = this._getCookies();
-        const schoolYearId = this._getSchoolYearId();
-
-        if (!tenantId) {
-            throw new Error("Tenant ID not available");
-        }
-
-        return await this._httpClient.get<T>(
-            `/WebUntis/api/rest/view/v1/timetable/grid?${params}`,
-            {
-                Authorization: `Bearer ${token}`,
-                "tenant-id": tenantId,
-                "x-webuntis-api-school-year-id": schoolYearId,
-                Cookie: cookies
-            }
-        );
-    }
-
-    /**
      * Fetch homeworks and lessons
      */
     async fetchHomeworksLessons(params: URLSearchParams): Promise<HomeworksLessonsResponse> {
