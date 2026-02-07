@@ -1,1 +1,1 @@
-export type TimetableStatus = "REGULAR" | string;
+export type TimetableStatus = "REGULAR" | "NO_DATA" | string;
