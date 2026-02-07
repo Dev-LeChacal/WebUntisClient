@@ -1,4 +1,4 @@
-export interface Excuse {
+interface Excuse {
     id: number;
     text: string;
     excuseDate: number;
@@ -8,7 +8,7 @@ export interface Excuse {
     username: string;
 }
 
-export interface Absence {
+interface Absence {
     id: number;
     startDate: number;
     endDate: number;
@@ -29,7 +29,7 @@ export interface Absence {
     excuse: Excuse;
 }
 
-export interface AbsencesStudentsData {
+export interface AbsencesData {
     absences: Absence[];
     absenceReasons: unknown[];
     excuseStatuses: unknown | null;
@@ -37,6 +37,6 @@ export interface AbsencesStudentsData {
     showCreateAbsence: boolean;
 }
 
-export interface AbsencesStudentsResponse {
-    data: AbsencesStudentsData;
+export interface AbsencesResponse {
+    data: AbsencesData;
 }

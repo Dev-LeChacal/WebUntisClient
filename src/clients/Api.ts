@@ -1,4 +1,4 @@
-import { AbsencesStudentsResponse } from "../types/absences/absences";
+import { AbsencesResponse } from "../types/absences/absences";
 import { AppData } from "../types/app-data/app-data";
 import { HomeworksLessonsResponse } from "../types/homeworks/homeworks";
 import { ProfileResponse } from "../types/profile/profile";
@@ -90,10 +90,10 @@ export class ApiClient {
     /**
      * Fetch absences
      */
-    async fetchAbsences(params: URLSearchParams): Promise<AbsencesStudentsResponse> {
+    async fetchAbsences(params: URLSearchParams): Promise<AbsencesResponse> {
         const cookies = this.getCookies();
 
-        return await this.httpClient.get<AbsencesStudentsResponse>(
+        return await this.httpClient.get<AbsencesResponse>(
             `/WebUntis/api/classreg/absences/students?${params}`,
             { Cookie: cookies }
         );

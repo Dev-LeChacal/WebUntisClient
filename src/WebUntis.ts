@@ -10,7 +10,7 @@ import { AppDataService } from "./services/AppData";
 import { HomeworksService } from "./services/Homeworks";
 import { ProfileService } from "./services/Profile";
 import { TimetableService } from "./services/Timetable";
-import { AbsencesStudentsData } from "./types/absences/absences";
+import { AbsencesData } from "./types/absences/absences";
 import { AppData, CurrentSchoolYear, Holiday, OneDriveData, Tenant, User } from "./types/app-data/app-data";
 import { HomeworksLessonsData } from "./types/homeworks/homeworks";
 import { Profile } from "./types/profile/profile";
@@ -302,7 +302,7 @@ export class WebUntisClient {
      * @param start - Start date
      * @param end - End date
      */
-    async getAbsences(start: Date, end: Date): Promise<AbsencesStudentsData> {
+    async getAbsences(start: Date, end: Date): Promise<AbsencesData> {
         this._ensureAuthenticated();
         return await this._absencesService.getAbsences(start, end);
     }
