@@ -97,4 +97,5 @@ pnpm i webuntis-client
 
 ## Disclaimer
 
-This is an unofficial client and is not affiliated with Untis GmbH.
+This is an unofficial client and is not affiliated with Untis GmbH. \
+Inspired by [WebUntis](https://github.com/SchoolUtils/WebUntis).
