@@ -1,3 +1,5 @@
+import chalk from "chalk";
+
 import { Credentials, WebUntisClient } from "../src";
 
 const credentials = new Credentials(
@@ -10,28 +12,33 @@ const credentials = new Credentials(
 const client = new WebUntisClient(credentials);
 await client.login();
 
-const currentDate = new Date("2025");
-let found = false;
-let attempts = 0;
+const startDate = new Date("2024");
+const endDate = new Date("2027");
 
-while (!found) {
-    console.log(`Current date: ${currentDate.toDateString()} | Attempts: ${attempts}`);
+const all = new Set<string>();
+const currentDate = new Date(startDate);
 
-    const timetable = await client.getOwnTimetable(currentDate, currentDate);
+while (currentDate <= endDate) {
+    const monthStart = new Date(currentDate);
+    const monthEnd = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+
+    console.log(`Fetching ${chalk.green(monthStart.toDateString())} to ${chalk.blue(monthEnd.toDateString())}`);
+
+    const timetable = await client.getOwnTimetable(monthStart, monthEnd);
 
     for (const day of timetable) {
         for (const course of day.gridEntries) {
-            if (course.status !== "REGULAR" && course.status !== "NO_DATA") {
-                found = true;
-                console.log(`Found a not discovered status: ${course.status} on ${currentDate.toDateString()}`);
+            all.add(course.status);
+
+            if (course.status !== "REGULAR" && course.status !== "CHANGED") {
+                console.log(chalk.red.bold(`Found status: ${course.status} on ${day.date.toDateString()}`));
             }
         }
     }
 
-    if (!found) {
-        currentDate.setDate(currentDate.getDate() + 1);
-        attempts++;
-    }
+    currentDate.setMonth(currentDate.getMonth() + 1);
 }
+
+console.log(chalk.yellow(`\nAll unique statuses found:`), chalk.cyan(Array.from(all).join(", ")));
 
 await client.logout();

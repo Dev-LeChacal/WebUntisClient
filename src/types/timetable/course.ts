@@ -1,12 +1,13 @@
-import { TimetableStatus } from "./status";
-
+export type CourseStatus = "REGULAR" | "CHANGED";
 export type CourseType = "NORMAL_TEACHING_PERIOD" | "EXAM" | string;
+
+export type PositionStatus = "REGULAR" | "NO_DATA";
 export type PositionType = "TEACHER" | "SUBJECT" | "ROOM" | string;
 
 export class CoursePosition {
     constructor(
         readonly type: PositionType,
-        readonly status: TimetableStatus,
+        readonly status: PositionStatus,
         readonly shortName: string,
         readonly longName: string,
         readonly displayName: string
@@ -18,7 +19,7 @@ export class Course {
     constructor(
         readonly from: Date,
         readonly to: Date,
-        readonly status: TimetableStatus,
+        readonly status: CourseStatus,
         readonly type: CourseType,
         readonly color: string,
         readonly teacher: CoursePosition | null = null,
