@@ -3,7 +3,7 @@ import { AuthenticationError } from "../errors/Authentication";
 import { SessionInfo } from "../types/session/session";
 import { Course, CoursePosition } from "../types/timetable/course";
 import { TimetableDay } from "../types/timetable/day";
-import { TimetableEntries } from "../types/timetable/timetable";
+import { Day, TimetableEntries } from "../types/timetable/timetable";
 import { UtilsDate } from "../utils/date";
 
 /**
@@ -29,8 +29,59 @@ export class TimetableService {
         const entriesParams = this._buildTimetableEntriesParams(start, end, true, session.personId);
 
         const entries = await this._apiClient.fetchTimetableEntries<TimetableEntries>(entriesParams);
-        const days = entries.days;
 
+        return this._convertToTimetableDays(entries.days);
+    }
+
+    /**
+     * Get class timetable for date range
+     */
+    async getClassTimetable(start: Date, end: Date): Promise<TimetableDay[]> {
+        const session = this._getSession();
+
+        if (!session?.klasseId) {
+            throw new AuthenticationError("No active session or klasse Id");
+        }
+
+        const entriesParams = this._buildTimetableEntriesParams(start, end, false, session.klasseId);
+
+        const entries = await this._apiClient.fetchTimetableEntries<TimetableEntries>(entriesParams);
+
+        return this._convertToTimetableDays(entries.days);
+    }
+
+    /**
+     * Build query parameters for timetable entries request
+     */
+    private _buildTimetableEntriesParams(
+        start: Date,
+        end: Date,
+        isStudent: boolean,
+        id: number
+    ): URLSearchParams {
+        const startDate = UtilsDate.toUntisDate(start);
+        const endDate = UtilsDate.toUntisDate(end);
+
+        const timetableType = isStudent ? "MY_TIMETABLE" : "STANDARD";
+        const resourceType = isStudent ? "STUDENT" : "CLASS";
+
+        return new URLSearchParams({
+            start: startDate,
+            end: endDate,
+            format: "4",
+            resourceType: resourceType,
+            resources: id.toString(),
+            periodTypes: "",
+            timetableType: timetableType,
+            layout: "START_TIME"
+        });
+    }
+
+    /**
+     * Convert response to organized data
+     * HUM HUM Web Untis
+     */
+    private _convertToTimetableDays(days: Day[]): TimetableDay[] {
         const timetableDays: TimetableDay[] = [];
 
         for (const day of days) {
@@ -105,49 +156,5 @@ export class TimetableService {
         }
 
         return timetableDays;
-    }
-
-    /**
-     * Get class timetable for date range
-     */
-    async getClassTimetable(start: Date, end: Date): Promise<TimetableEntries> {
-        const session = this._getSession();
-
-        if (!session?.klasseId) {
-            throw new AuthenticationError("No active session or klasse Id");
-        }
-
-        const entriesParams = this._buildTimetableEntriesParams(start, end, false, session.klasseId);
-
-        const entries = await this._apiClient.fetchTimetableEntries<TimetableEntries>(entriesParams);
-
-        return entries;
-    }
-
-    /**
-     * Build query parameters for timetable entries request
-     */
-    private _buildTimetableEntriesParams(
-        start: Date,
-        end: Date,
-        isStudent: boolean,
-        id: number
-    ): URLSearchParams {
-        const startDate = UtilsDate.toUntisDate(start);
-        const endDate = UtilsDate.toUntisDate(end);
-
-        const timetableType = isStudent ? "MY_TIMETABLE" : "STANDARD";
-        const resourceType = isStudent ? "STUDENT" : "CLASS";
-
-        return new URLSearchParams({
-            start: startDate,
-            end: endDate,
-            format: "4",
-            resourceType: resourceType,
-            resources: id.toString(),
-            periodTypes: "",
-            timetableType: timetableType,
-            layout: "START_TIME"
-        });
     }
 }
