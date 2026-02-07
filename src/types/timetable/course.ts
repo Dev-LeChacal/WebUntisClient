@@ -1,7 +1,7 @@
 export type CourseStatus = "REGULAR" | "CHANGED";
 export type CourseType = "NORMAL_TEACHING_PERIOD" | "EXAM" | string;
 
-export type PositionStatus = "REGULAR" | "NO_DATA";
+export type PositionStatus = "REGULAR" | "ADDED" | "NO_DATA";
 export type PositionType = "TEACHER" | "SUBJECT" | "ROOM" | string;
 
 export class CoursePosition {
