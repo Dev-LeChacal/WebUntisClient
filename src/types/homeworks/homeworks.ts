@@ -1,10 +1,10 @@
-interface HomeworkRecord {
+export interface HomeworkRecord {
     homeworkId: number;
     teacherId: number;
     elementIds: number[];
 }
 
-interface Homeworks {
+export interface Homeworks {
     id: number;
     lessonId: number;
     date: number;
@@ -15,12 +15,12 @@ interface Homeworks {
     attachments: unknown[];
 }
 
-interface Teacher {
+export interface Teacher {
     id: number;
     name: string;
 }
 
-interface Lesson {
+export interface Lesson {
     id: number;
     subject: string;
     lessonType: string;
