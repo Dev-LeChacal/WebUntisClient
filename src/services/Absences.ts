@@ -1,5 +1,5 @@
 import { ApiClient } from "../clients/Api";
-import { AbsencesStudentsData } from "../types/absences/absences";
+import { AbsencesData } from "../types/absences/absences";
 import { UtilsDate } from "../utils/date";
 
 /**
@@ -15,7 +15,7 @@ export class AbsencesService {
     /**
      * Get absences
      */
-    async getAbsences(start: Date, end: Date): Promise<AbsencesStudentsData> {
+    async getAbsences(start: Date, end: Date): Promise<AbsencesData> {
         const params = this._buildAbsencesParams(start, end);
         const response = await this._apiClient.fetchAbsences(params);
         return response.data;

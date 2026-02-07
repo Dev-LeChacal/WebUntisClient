@@ -5,7 +5,7 @@ export interface ProfileResponse {
     };
 }
 
-interface Profile {
+export interface Profile {
     name: string;
     userGroup: string;
     userRoleId: number;
@@ -24,7 +24,7 @@ interface Profile {
     showNextDayPeriods: boolean;
 }
 
-interface Gender {
+export interface Gender {
     id: number;
     longLabel: string;
     shortLabel: string;
