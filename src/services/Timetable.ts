@@ -3,7 +3,7 @@ import { AuthenticationError } from "../errors/Authentication";
 import { SessionInfo } from "../types/session/session";
 import { Course, CoursePosition } from "../types/timetable/course";
 import { TimetableDay } from "../types/timetable/day";
-import { OwnTimetableEntries } from "../types/timetable/timetable";
+import { TimetableEntries } from "../types/timetable/timetable";
 import { UtilsDate } from "../utils/date";
 
 /**
@@ -28,7 +28,7 @@ export class TimetableService {
 
         const entriesParams = this._buildTimetableEntriesParams(start, end, true, session.personId);
 
-        const entries = await this._apiClient.fetchTimetableEntries<OwnTimetableEntries>(entriesParams);
+        const entries = await this._apiClient.fetchTimetableEntries<TimetableEntries>(entriesParams);
         const days = entries.days;
 
         const timetableDays: TimetableDay[] = [];
@@ -110,7 +110,7 @@ export class TimetableService {
     /**
      * Get class timetable for date range
      */
-    async getClassTimetable(start: Date, end: Date): Promise<OwnTimetableEntries> {
+    async getClassTimetable(start: Date, end: Date): Promise<TimetableEntries> {
         const session = this._getSession();
 
         if (!session?.klasseId) {
@@ -119,7 +119,7 @@ export class TimetableService {
 
         const entriesParams = this._buildTimetableEntriesParams(start, end, false, session.klasseId);
 
-        const entries = await this._apiClient.fetchTimetableEntries<OwnTimetableEntries>(entriesParams);
+        const entries = await this._apiClient.fetchTimetableEntries<TimetableEntries>(entriesParams);
 
         return entries;
     }

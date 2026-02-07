@@ -1,16 +1,16 @@
-export interface Duration {
+interface Duration {
     start: string;
     end: string;
 }
 
-export interface Resource {
+interface Resource {
     id: number;
     shortName: string;
     longName: string;
     displayName: string;
 }
 
-export interface PositionData {
+interface PositionData {
     type: string;
     status: string;
     shortName: string;
@@ -19,17 +19,17 @@ export interface PositionData {
     displayNameLabel: string;
 }
 
-export interface Text {
+interface Text {
     type: string;
     text: string;
 }
 
-export interface OwnPosition {
+interface Position {
     current: PositionData;
     removed: unknown | null;
 }
 
-export interface OwnGridEntry {
+interface GridEntry {
     ids: number[];
     duration: Duration;
     type: string;
@@ -42,13 +42,13 @@ export interface OwnGridEntry {
     color: string;
     notesAll: string;
     icons: string[];
-    position1: OwnPosition[];
-    position2: OwnPosition[];
-    position3: OwnPosition[];
-    position4: OwnPosition[] | null;
-    position5: OwnPosition[] | null;
-    position6: OwnPosition[];
-    position7: OwnPosition[];
+    position1: Position[];
+    position2: Position[];
+    position3: Position[];
+    position4: Position[] | null;
+    position5: Position[] | null;
+    position6: Position[];
+    position7: Position[];
     texts: Text[];
     lessonText: string;
     lessonInfo: string | null;
@@ -59,18 +59,18 @@ export interface OwnGridEntry {
     link: unknown | null;
 }
 
-export interface OwnDay {
+interface Day {
     date: string;
     resourceType: string;
     resource: Resource;
     status: string;
     dayEntries: [];
-    gridEntries: OwnGridEntry[];
+    gridEntries: GridEntry[];
     backEntries: [];
 }
 
-export interface OwnTimetableEntries {
+export interface TimetableEntries {
     format: number;
-    days: OwnDay[];
+    days: Day[];
     errors: unknown[];
 }
