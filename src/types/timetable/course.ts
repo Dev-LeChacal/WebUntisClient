@@ -1,6 +1,6 @@
 import { TimetableStatus } from "./status";
 
-export type CourseType = "NORMAL_TEACHING_PERIOD" | string;
+export type CourseType = "NORMAL_TEACHING_PERIOD" | "EXAM" | string;
 export type PositionType = "TEACHER" | "SUBJECT" | "ROOM" | string;
 
 export class CoursePosition {
