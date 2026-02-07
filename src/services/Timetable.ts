@@ -45,29 +45,39 @@ export class TimetableService {
                 const type = entry.type;
                 const color = entry.color;
 
-                const teacher = new CoursePosition(
-                    entry.position1[0].current.type,
-                    entry.position1[0].current.status,
-                    entry.position1[0].current.shortName,
-                    entry.position1[0].current.longName,
-                    entry.position1[0].current.displayName
-                );
+                let teacher: CoursePosition | null = null;
+                let subject: CoursePosition | null = null;
+                let room: CoursePosition | null = null;
 
-                const subject = new CoursePosition(
-                    entry.position2[0].current.type,
-                    entry.position2[0].current.status,
-                    entry.position2[0].current.shortName,
-                    entry.position2[0].current.longName,
-                    entry.position2[0].current.displayName
-                );
+                if (entry.position1) {
+                    teacher = new CoursePosition(
+                        entry.position1[0].current.type,
+                        entry.position1[0].current.status,
+                        entry.position1[0].current.shortName,
+                        entry.position1[0].current.longName,
+                        entry.position1[0].current.displayName
+                    );
+                }
 
-                const room = new CoursePosition(
-                    entry.position3[0].current.type,
-                    entry.position3[0].current.status,
-                    entry.position3[0].current.shortName,
-                    entry.position3[0].current.longName,
-                    entry.position3[0].current.displayName
-                );
+                if (entry.position2) {
+                    subject = new CoursePosition(
+                        entry.position2[0].current.type,
+                        entry.position2[0].current.status,
+                        entry.position2[0].current.shortName,
+                        entry.position2[0].current.longName,
+                        entry.position2[0].current.displayName
+                    );
+                }
+
+                if (entry.position3) {
+                    room = new CoursePosition(
+                        entry.position3[0].current.type,
+                        entry.position3[0].current.status,
+                        entry.position3[0].current.shortName,
+                        entry.position3[0].current.longName,
+                        entry.position3[0].current.displayName
+                    );
+                }
 
                 const course = new Course(
                     from,
