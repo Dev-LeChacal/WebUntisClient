@@ -1,10 +1,10 @@
-import { after, before, test } from "node:test";
+import { afterAll, beforeAll, test } from "bun:test";
 
 import { Credentials, WebUntisClient } from "../src";
 
 let client: WebUntisClient;
 
-before(async () => {
+beforeAll(async () => {
     const credentials = new Credentials(
         "WebUntisClient",
         process.env.UNTIS_SCHOOL!,
@@ -15,7 +15,7 @@ before(async () => {
     await client.login();
 });
 
-after(async () => {
+afterAll(async () => {
     await client.logout();
 });
 
