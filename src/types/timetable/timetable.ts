@@ -59,136 +59,18 @@ export interface OwnGridEntry {
     link: unknown | null;
 }
 
-export interface OwnBackEntry {
-    id: number;
-    type: string;
-    status: string;
-    statusDetail: string;
-    duration: Duration;
-    isFullDay: boolean;
-    durationTotal: Duration;
-    layoutStartPosition: number;
-    layoutWidth: number;
-    color: string;
-    resource: unknown | null;
-    shortName: string;
-    longName: string;
-    notesAll: unknown | null;
-}
-
 export interface OwnDay {
     date: string;
     resourceType: string;
     resource: Resource;
     status: string;
-    dayEntries: unknown[];
+    dayEntries: [];
     gridEntries: OwnGridEntry[];
-    backEntries: OwnBackEntry[];
+    backEntries: [];
 }
 
 export interface OwnTimetableEntries {
     format: number;
     days: OwnDay[];
     errors: unknown[];
-}
-
-export interface ClassPosition {
-    current: PositionData;
-    removed: null;
-}
-
-export interface ClassGridEntry {
-    ids: number[];
-    duration: Duration;
-    type: string;
-    status: string;
-    statusDetail: string | null;
-    name: string | null;
-    layoutStartPosition: number;
-    layoutWidth: number;
-    layoutGroup: number;
-    color: string;
-    notesAll: string;
-    icons: string[];
-    position1: ClassPosition[];
-    position2: ClassPosition[];
-    position3: ClassPosition[];
-    position4: ClassPosition[] | null;
-    position5: ClassPosition[] | null;
-    position6: ClassPosition[];
-    position7: ClassPosition[];
-    texts: Text[];
-    lessonText: string;
-    lessonInfo: string | null;
-    substitutionText: string;
-    userName: string | null;
-    moved: null;
-    durationTotal: null;
-    link: null;
-}
-
-export interface ClassBackEntry {
-    id: number;
-    type: string;
-    status: string;
-    statusDetail: string;
-    duration: Duration;
-    isFullDay: boolean;
-    durationTotal: Duration;
-    layoutStartPosition: number;
-    layoutWidth: number;
-    color: string;
-    resource: null;
-    shortName: string;
-    longName: string;
-    notesAll: null;
-}
-
-export interface ClassDay {
-    date: string;
-    resourceType: string;
-    resource: Resource;
-    status: string;
-    dayEntries: unknown[];
-    gridEntries: ClassGridEntry[];
-    backEntries: ClassBackEntry[];
-}
-
-export interface ClassTimetableEntries {
-    format: number;
-    days: ClassDay[];
-    errors: unknown[];
-}
-
-export interface TimeGridSlot {
-    name: string | null;
-    number: number | null;
-    duration: Duration;
-}
-
-export interface FormatDefinition {
-    id: number;
-    name: string;
-    longname: string;
-    showStartEndTimeOfSlots: boolean;
-    showStartEndTime: boolean;
-    showCancellations: boolean;
-    showExternalCalendars: boolean;
-    hideDetails: boolean;
-    minRows: number;
-    duration: Duration;
-    timeGridType: 'LESSON_GRID' | string;
-    timeGridDays: string[];
-    timeGridSlots: TimeGridSlot[];
-}
-
-export interface OwnTimetableGrid {
-    firstDayOfWeek: string;
-    studentFormat: number;
-    classFormat: number;
-    subjectFormat: number;
-    teacherFormat: number;
-    roomFormat: number;
-    resourceFormat: number;
-    formatDefinitions: FormatDefinition[];
 }
