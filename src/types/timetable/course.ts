@@ -17,6 +17,7 @@ export class CoursePosition {
 
 export class Course {
     constructor(
+        readonly id: number,
         readonly from: Date,
         readonly to: Date,
         readonly status: CourseStatus,

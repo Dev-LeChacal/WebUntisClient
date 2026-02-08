@@ -89,6 +89,8 @@ export class TimetableService {
             const courses: Course[] = [];
 
             for (const entry of day.gridEntries) {
+                const id = entry.ids[0];
+
                 const from = new Date(entry.duration.start);
                 const to = new Date(entry.duration.end);
 
@@ -131,6 +133,7 @@ export class TimetableService {
                 }
 
                 const course = new Course(
+                    id,
                     from,
                     to,
                     status,
