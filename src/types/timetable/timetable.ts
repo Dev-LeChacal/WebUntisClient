@@ -1,16 +1,16 @@
-export interface Duration {
+interface Duration {
     start: string;
     end: string;
 }
 
-export interface Resource {
+interface Resource {
     id: number;
     shortName: string;
     longName: string;
     displayName: string;
 }
 
-export interface PositionData {
+interface PositionData {
     type: string;
     status: string;
     shortName: string;
@@ -19,17 +19,17 @@ export interface PositionData {
     displayNameLabel: string;
 }
 
-export interface Text {
+interface Text {
     type: string;
     text: string;
 }
 
-export interface Position {
+interface Position {
     current: PositionData;
     removed: unknown | null;
 }
 
-export interface GridEntry {
+interface GridEntry {
     ids: number[];
     duration: Duration;
     type: string;

@@ -24,7 +24,7 @@ export interface Profile {
     showNextDayPeriods: boolean;
 }
 
-export interface Gender {
+interface Gender {
     id: number;
     longLabel: string;
     shortLabel: string;

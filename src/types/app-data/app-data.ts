@@ -1,15 +1,15 @@
-export interface TimeUnit {
+interface TimeUnit {
     endTime: number;
     startTime: number;
     unitOfDay: number;
 }
 
-export interface TimeGrid {
+interface TimeGrid {
     schoolyearId: number;
     units: TimeUnit[];
 }
 
-export interface DateRange {
+interface DateRange {
     start: string;
     end: string;
 }

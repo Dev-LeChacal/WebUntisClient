@@ -1,4 +1,4 @@
-export interface JsonRpcError {
+interface JsonRpcError {
     code: number;
     message: string;
 }
