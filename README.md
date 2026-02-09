@@ -51,13 +51,13 @@ const end = new Date("2027");
 await client.getClassTimetable(start, end);
 ```
 
-### Homeworks and Lessons
+### Homeworks
 
 ```typescript
 const start = new Date("2026");
 const end = new Date("2027");
 
-await client.getHomeworksLessons(start, end);
+await client.getHomeworks(start, end);
 ```
 
 ### Absences

@@ -12,7 +12,7 @@ import { ProfileService } from "./services/Profile";
 import { TimetableService } from "./services/Timetable";
 import { AbsencesData } from "./types/absences/absences";
 import { AppData, CurrentSchoolYear, Holiday, OneDriveData, Tenant, User } from "./types/app-data/app-data";
-import { HomeworksLessonsData } from "./types/homeworks/homeworks";
+import { Homework } from "./types/homeworks/homework";
 import { Profile } from "./types/profile/profile";
 import { SessionInfo } from "./types/session/session";
 import { TimetableDay } from "./types/timetable/day";
@@ -278,17 +278,17 @@ export class WebUntisClient {
 
     //#endregion
 
-    //#region Homeworks and Lessons
+    //#region Homeworks
 
     /**
-     * Get homeworks and lessons for date range
+     * Get homeworks for date range
      *
      * @param start - Start date
      * @param end - End date
      */
-    async getHomeworksLessons(start: Date, end: Date): Promise<HomeworksLessonsData> {
+    async getHomeworks(start: Date, end: Date): Promise<Homework[]> {
         this._ensureAuthenticated();
-        return await this._homeworksService.getHomeworksLessons(start, end);
+        return await this._homeworksService.getHomeworks(start, end);
     }
 
     //#endregion

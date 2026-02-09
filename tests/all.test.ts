@@ -35,8 +35,8 @@ test("get class timetable", async () => {
     await client.getClassTimetable(new Date("2026-02-05"), new Date("2026-02-06"));
 });
 
-test("get homeworks and lessons", async () => {
-    await client.getHomeworksLessons(new Date("2025"), new Date("2026"));
+test("get homeworks", async () => {
+    await client.getHomeworks(new Date("2025"), new Date("2026"));
 });
 
 test("get absences", async () => {

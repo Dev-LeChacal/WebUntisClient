@@ -1,6 +1,6 @@
 import { AbsencesResponse } from "../types/absences/absences";
 import { AppData } from "../types/app-data/app-data";
-import { HomeworksLessonsResponse } from "../types/homeworks/homeworks";
+import { HomeworksResponse } from "../types/homeworks/homeworks";
 import { ProfileResponse } from "../types/profile/profile";
 import { HttpClient } from "./Http";
 
@@ -76,12 +76,12 @@ export class ApiClient {
     }
 
     /**
-     * Fetch homeworks and lessons
+     * Fetch homeworks
      */
-    async fetchHomeworksLessons(params: URLSearchParams): Promise<HomeworksLessonsResponse> {
+    async fetchHomeworks(params: URLSearchParams): Promise<HomeworksResponse> {
         const cookies = this.getCookies();
 
-        return await this.httpClient.get<HomeworksLessonsResponse>(
+        return await this.httpClient.get<HomeworksResponse>(
             `/WebUntis/api/homeworks/lessons?${params}`,
             { Cookie: cookies }
         );

@@ -2,8 +2,8 @@ export class Homework {
     constructor(
         readonly id: string,
         readonly lessonId: string,
-        readonly date: string,
-        readonly dueDate: string,
+        readonly date: Date,
+        readonly dueDate: Date,
         readonly text: string,
         readonly remark: string,
         readonly subject: string,

@@ -26,13 +26,13 @@ interface Lesson {
     lessonType: string;
 }
 
-export interface HomeworksLessonsData {
+export interface HomeworksData {
     records: HomeworkRecord[];
     homeworks: Homework[];
     teachers: Teacher[];
     lessons: Lesson[];
 }
 
-export interface HomeworksLessonsResponse {
-    data: HomeworksLessonsData;
+export interface HomeworksResponse {
+    data: HomeworksData;
 }
