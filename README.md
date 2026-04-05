@@ -35,19 +35,23 @@ await client.auth.logout();
 ### Own Timetable
 
 ```typescript
-const start = new Date("2026");
-const end = new Date("2027");
+const range = {
+    start: new Date("2026"),
+    end: new Date("2027"),
+}
 
-await client.getOwnTimetable(start, end);
+await client.timetable.getOwn(range);
 ```
 
 ### Class Timetable
 
 ```typescript
-const start = new Date("2026");
-const end = new Date("2027");
+const range = {
+    start: new Date("2026"),
+    end: new Date("2027"),
+}
 
-await client.getClassTimetable(start, end);
+await client.timetable.getClass(range);
 ```
 
 ### Homeworks

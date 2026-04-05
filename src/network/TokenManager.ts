@@ -14,12 +14,11 @@ export class TokenManager {
         private readonly requestManager: RequestManager,
         private readonly session: Session,
         private readonly baseURL: string,
-        private readonly school: string
     ) {
     }
 
     async fetchToken(): Promise<void> {
-        const cookies = this.session.getCookies(this.school);
+        const cookies = this.session.getCookies();
 
         const token = await this.requestManager.getText(
             `${this.baseURL}/WebUntis/api/token/new`,

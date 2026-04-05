@@ -5,11 +5,14 @@ import { RawSessionInfo } from "../types/responses/session";
 export class Session {
     private session: CurrentSessionInfo = null;
 
+    constructor(private readonly schoolBase64: string) {
+    }
+
     set(raw: RawSessionInfo): void {
-        if (raw.sessionId === undefined || raw.klasseId === undefined || raw.personId === undefined || raw.personType === undefined) {
+        if ( raw.sessionId === undefined || raw.klasseId === undefined || raw.personId === undefined || raw.personType === undefined ) {
             const properties = (["sessionId", "klasseId", "personId", "personType"] as (keyof RawSessionInfo)[]);
             const missing = properties.filter(key => raw[key] === undefined);
-            
+
             throw new AuthError(`Cannot set session: missing fields: ${missing.join(", ")}`);
         }
 
@@ -33,16 +36,16 @@ export class Session {
         return this.session !== null;
     }
 
-    getCookies(school: string): string {
-        if (this.session === null) {
+    getCookies(): string {
+        if ( this.session === null ) {
             throw new AuthError("Tried to get cookies but session is null");
         }
 
-        return `JSESSIONID=${this.session.sessionId}; schoolname=${school}`;
+        return `JSESSIONID=${this.session.sessionId}; schoolname=${this.schoolBase64}`;
     }
 
     getPersonId(): number {
-        if (this.session === null) {
+        if ( this.session === null ) {
             throw new AuthError("Tried to get person id but session is null");
         }
 
@@ -50,7 +53,7 @@ export class Session {
     }
 
     getClassId(): number {
-        if (this.session === null) {
+        if ( this.session === null ) {
             throw new AuthError("Tried to get class id but session is null");
         }
 
