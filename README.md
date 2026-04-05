@@ -18,7 +18,6 @@ A Web Untis API Client to interact with [Web Untis](https://webuntis.com).
 
 ```typescript
 const credentials = new Credentials(
-    "WebUntisClient",
     "school-name",
     "username",
     "password",
@@ -26,11 +25,11 @@ const credentials = new Credentials(
 
 const client = new WebUntisClient(credentials);
 
-await client.login();
+await client.auth.login();
 
 // Get what you need
 
-await client.logout();
+await client.auth.logout();
 ```
 
 ### Own Timetable
