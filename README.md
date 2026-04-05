@@ -72,18 +72,6 @@ const end = new Date("2027");
 await client.getAbsences(start, end);
 ```
 
-### App data
-
-```typescript
-await client.getAppData();
-```
-
-### Profile data
-
-```typescript
-await client.getProfile();
-```
-
 ## Installation
 
 ```bash

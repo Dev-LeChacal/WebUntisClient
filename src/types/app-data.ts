@@ -1,0 +1,1 @@
+export type { RawAppData as AppData } from "./responses/app-data";

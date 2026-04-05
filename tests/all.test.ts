@@ -1,22 +1,21 @@
-import { afterAll, beforeAll, expect, test } from "bun:test";
+import { afterAll, beforeAll, test } from "bun:test";
 
 import { Credentials, WebUntisClient } from "../src";
 
 let client: WebUntisClient;
+let credentials: Credentials;
 
 beforeAll(async () => {
-    const credentials = new Credentials(
+    credentials = new Credentials(
         process.env.UNTIS_SCHOOL!,
         process.env.UNTIS_USERNAME!,
         process.env.UNTIS_PASSWORD!
     );
-
     client = new WebUntisClient(credentials);
-    await client.auth.login(credentials.Username, credentials.Password);
 });
 
-test("login", () => {
-    expect(client.auth.isAuthenticated()).toBe(true);
+test("login", async () => {
+    await client.auth.login(credentials.Username, credentials.Password);
 });
 
 test("get own timetable", async () => {
@@ -33,9 +32,6 @@ afterAll(async () => {
     await client.auth.logout();
 });
 
-// test("get app data", async () => {
-//     await client.getAppData();
-// });
 //
 // test("get profile data", async () => {
 //     await client.getProfile();

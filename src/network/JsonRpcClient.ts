@@ -1,14 +1,14 @@
 import { AuthError } from "../errors/Auth";
+import { RequestManager } from "../managers/RequestManager";
 import { JsonRpcResponse } from "../types/responses/json-rpc";
 import { RawSessionInfo } from "../types/responses/session";
-import { RequestManager } from "./RequestManager";
 
 export class JsonRpcClient {
     private readonly CLIENT_ID = "WebUntisClient";
     private readonly endpoint: string;
 
     constructor(
-        private readonly requestManager: RequestManager,
+        private readonly request: RequestManager,
         baseURL: string
     ) {
         this.endpoint = `${baseURL}/WebUntis/jsonrpc.do`;
@@ -46,7 +46,7 @@ export class JsonRpcClient {
             params
         };
 
-        const response = await this.requestManager.post<JsonRpcResponse<T>>(
+        const response = await this.request.post<JsonRpcResponse<T>>(
             this.endpoint,
             body,
             headers

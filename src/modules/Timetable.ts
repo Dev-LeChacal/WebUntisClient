@@ -1,5 +1,6 @@
-import { RequestManager } from "../network/RequestManager";
-import { TokenManager } from "../network/TokenManager";
+import { AppDataManager } from "../managers/AppData";
+import { RequestManager } from "../managers/RequestManager";
+import { TokenManager } from "../managers/TokenManager";
 import { Course, CoursePosition } from "../structures/Course";
 import { Day } from "../structures/Day";
 import { Session } from "../structures/Session";
@@ -9,8 +10,9 @@ import { fromISO, toISO } from "../utils/date";
 
 export class TimetableModule {
     constructor(
-        private readonly requestManager: RequestManager,
-        private readonly tokenManager: TokenManager,
+        private readonly appData: AppDataManager,
+        private readonly request: RequestManager,
+        private readonly token: TokenManager,
         private readonly session: Session,
         private readonly baseURL: string,
     ) {
@@ -29,7 +31,7 @@ export class TimetableModule {
         const headers = await this.buildHeaders();
 
         const url = `${this.baseURL}/WebUntis/api/rest/view/v1/timetable/entries?${params}`;
-        const raw = await this.requestManager.get<RawTimetable>(url, headers);
+        const raw = await this.request.get<RawTimetable>(url, headers);
 
         return this.convert(raw);
     }
@@ -54,14 +56,15 @@ export class TimetableModule {
     }
 
     private async buildHeaders(): Promise<Record<string, string>> {
-        const token = `Bearer ${await this.tokenManager.getToken()}`;
-        const tenantId = this.tokenManager.getTenantId();
+        const schoolYearId = await this.appData.getSchoolYearId();
+        const token = `Bearer ${await this.token.getToken()}`;
+        const tenantId = this.token.getTenantId();
         const cookies = this.session.getCookies();
 
         return {
             Authorization: token,
             "tenant-id": tenantId,
-            "x-webuntis-api-school-year-id": "24",
+            "x-webuntis-api-school-year-id": String(schoolYearId),
             Cookie: cookies
         };
     }

@@ -11,7 +11,7 @@ export class TokenManager {
     private expiryTime: number = 0;
 
     constructor(
-        private readonly requestManager: RequestManager,
+        private readonly request: RequestManager,
         private readonly session: Session,
         private readonly baseURL: string,
     ) {
@@ -20,7 +20,7 @@ export class TokenManager {
     async fetchToken(): Promise<void> {
         const cookies = this.session.getCookies();
 
-        const token = await this.requestManager.getText(
+        const token = await this.request.getText(
             `${this.baseURL}/WebUntis/api/token/new`,
             { Cookie: cookies }
         );
