@@ -28,6 +28,11 @@ test("get class timetable", async () => {
     await client.timetable.getClass(range);
 });
 
+test("get homeworks", async () => {
+    const range = { start: new Date("2026"), end: new Date("2027") };
+    await client.homeworks.get(range);
+});
+
 afterAll(async () => {
     await client.auth.logout();
 });
