@@ -83,7 +83,7 @@ export class RequestManager {
         });
 
         console.log("[POST STATUS]", res.status);
-        
+
         if ( !res.ok ) {
           throw new NetworkError(`${res.status} ${res.statusText}`);
         }
@@ -92,7 +92,7 @@ export class RequestManager {
 
         return await (JSON.parse(text) as T);
       } catch ( err ) {
-        console.log("[POST FAILED]", url, err.message);
+        console.log("[POST FAILED]", url, err);
         throw err;
       }
     });
