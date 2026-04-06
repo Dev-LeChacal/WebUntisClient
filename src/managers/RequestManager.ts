@@ -34,20 +34,27 @@ export class RequestManager {
   }
 
   public async get<T>(url: string, headers?: Record<string, string>): Promise<T> {
-    return this.enqueue(() =>
-      fetch(url, {
-        headers: {
-          ...this.defaultHeaders,
-          ...headers
-        }
+    return this.enqueue(() => {
+      console.log("[GET]", url);
+      console.log("[HEADERS]", JSON.stringify({ ...this.defaultHeaders, ...headers }));
+
+      return fetch(url, {
+        headers: { ...this.defaultHeaders, ...headers }
+
       }).then(res => {
+        console.log("[STATUS]", res.status);
+
         if ( !res.ok ) {
           throw new NetworkError(`${res.status} ${res.statusText}`);
         }
 
         return res.json() as Promise<T>;
-      })
-    );
+
+      }).catch(err => {
+        console.log("[FETCH FAILED]", url, err.message);
+        throw err;
+      });
+    });
   }
 
   public async getText(url: string, headers?: Record<string, string>): Promise<string> {
