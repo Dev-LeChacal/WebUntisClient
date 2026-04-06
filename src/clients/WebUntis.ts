@@ -1,22 +1,20 @@
-import { AppDataManager } from "./managers/AppData";
-import { RequestManager } from "./managers/RequestManager";
-import { TokenManager } from "./managers/TokenManager";
-import { AbsencesModule } from "./modules/Absences";
-import { AuthModule } from "./modules/Auth";
-import { DataModule } from "./modules/Data";
-import { HomeworksModule } from "./modules/Homeworks";
-import { SchoolsModule } from "./modules/Schools";
-import { TimetableModule } from "./modules/Timetable";
-import { JsonRpcClient } from "./network/JsonRpcClient";
-import { Credentials } from "./structures/Credentials";
-import { Session } from "./structures/Session";
+import { AppDataManager } from "../managers/AppData";
+import { RequestManager } from "../managers/RequestManager";
+import { TokenManager } from "../managers/TokenManager";
+import { AbsencesModule } from "../modules/Absences";
+import { AuthModule } from "../modules/Auth";
+import { DataModule } from "../modules/Data";
+import { HomeworksModule } from "../modules/Homeworks";
+import { TimetableModule } from "../modules/Timetable";
+import { Credentials } from "../structures";
+import { Session } from "../structures/Session";
+import { JsonRpcClient } from "./JsonRpc";
 
 export class WebUntisClient {
   public readonly auth: AuthModule;
   public readonly timetable: TimetableModule;
   public readonly homeworks: HomeworksModule;
   public readonly absences: AbsencesModule;
-  public readonly schools: SchoolsModule;
   public readonly data: DataModule;
 
   constructor(credentials: Credentials) {
@@ -35,7 +33,6 @@ export class WebUntisClient {
     this.timetable = new TimetableModule(appData, request, token, session);
     this.homeworks = new HomeworksModule(request, session);
     this.absences = new AbsencesModule(appData, request, session);
-    this.schools = new SchoolsModule(request);
     this.data = new DataModule(appData);
   }
 }

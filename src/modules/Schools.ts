@@ -1,6 +1,6 @@
 import { AuthError } from "../errors/Auth";
 import { RequestManager } from "../managers/RequestManager";
-import { School } from "../structures/School";
+import { School } from "../structures";
 import { RawSchools } from "../types/responses/schools";
 
 export class SchoolsModule {

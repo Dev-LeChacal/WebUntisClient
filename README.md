@@ -18,12 +18,12 @@ A Web Untis API Client to interact with [Web Untis](https://webuntis.com).
 
 ```typescript
 const credentials = new Credentials(
-    "school-name",
-    "username",
-    "password",
+  "school-name",
+  "username",
+  "password",
 );
 
-const client = new WebUntisClient(credentials);
+const client = new WebUntis(credentials);
 
 await client.auth.login();
 

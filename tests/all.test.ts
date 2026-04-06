@@ -1,9 +1,11 @@
 import { afterAll, beforeAll, test } from "bun:test";
 
 import { Credentials, WebUntisClient } from "../src";
+import { SchoolsClient } from "../src/clients/Schools";
 
 let client: WebUntisClient;
 let credentials: Credentials;
+let schoolsClient: SchoolsClient;
 
 beforeAll(async () => {
   credentials = new Credentials(
@@ -11,7 +13,9 @@ beforeAll(async () => {
     process.env.UNTIS_USERNAME!,
     process.env.UNTIS_PASSWORD!
   );
+
   client = new WebUntisClient(credentials);
+  schoolsClient = new SchoolsClient();
 });
 
 test("login", async () => {
@@ -38,12 +42,12 @@ test("get absences", async () => {
   await client.absences.get(range);
 });
 
-test("search schools", async () => {
-  await client.schools.search("Hermann-Leeser-Schule");
-});
-
 test("get person display name", async () => {
   await client.data.getPersonDisplayName();
+});
+
+test("search schools", async () => {
+  await schoolsClient.search("Louis");
 });
 
 afterAll(async () => {
