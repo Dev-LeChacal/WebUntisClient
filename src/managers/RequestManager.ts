@@ -34,27 +34,20 @@ export class RequestManager {
   }
 
   public async get<T>(url: string, headers?: Record<string, string>): Promise<T> {
-    return this.enqueue(() => {
-      console.log("[GET]", url);
-      console.log("[HEADERS]", JSON.stringify({ ...this.defaultHeaders, ...headers }));
-
-      return fetch(url, {
-        headers: { ...this.defaultHeaders, ...headers }
-
+    return this.enqueue(() =>
+      fetch(url, {
+        headers: {
+          ...this.defaultHeaders,
+          ...headers
+        }
       }).then(res => {
-        console.log("[STATUS]", res.status);
-
         if ( !res.ok ) {
           throw new NetworkError(`${res.status} ${res.statusText}`);
         }
 
         return res.json() as Promise<T>;
-
-      }).catch(err => {
-        console.log("[FETCH FAILED]", url, err.message);
-        throw err;
-      });
-    });
+      })
+    );
   }
 
   public async getText(url: string, headers?: Record<string, string>): Promise<string> {
@@ -75,25 +68,34 @@ export class RequestManager {
   }
 
   public async post<T>(url: string, body: object, headers?: Record<string, string>): Promise<T> {
-    return this.enqueue(() =>
-      fetch(url, {
-        method: "POST",
-        body: JSON.stringify(body),
-        headers: {
-          ...this.defaultHeaders,
-          ...headers,
-          "Content-Type": "application/json"
-        },
+    return this.enqueue(async () => {
+      console.log("[POST]", url);
 
-      }).then(async res => {
+      try {
+        const res = await fetch(url, {
+          method: "POST",
+          body: JSON.stringify(body),
+          headers: {
+            ...this.defaultHeaders,
+            ...headers,
+            "Content-Type": "application/json"
+          },
+        });
+
+        console.log("[POST STATUS]", res.status);
+        
         if ( !res.ok ) {
           throw new NetworkError(`${res.status} ${res.statusText}`);
         }
 
         const text = await res.text();
-        return JSON.parse(text) as T;
-      })
-    );
+
+        return await (JSON.parse(text) as T);
+      } catch ( err ) {
+        console.log("[POST FAILED]", url, err.message);
+        throw err;
+      }
+    });
   }
 
   private async processQueue(): Promise<void> {
