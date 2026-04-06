@@ -14,7 +14,6 @@ export class TimetableModule {
         private readonly request: RequestManager,
         private readonly token: TokenManager,
         private readonly session: Session,
-        private readonly baseURL: string,
     ) {
     }
 
@@ -30,7 +29,7 @@ export class TimetableModule {
         const params = this.buildParams(range, isStudent, id);
         const headers = await this.buildHeaders();
 
-        const url = `${this.baseURL}/WebUntis/api/rest/view/v1/timetable/entries?${params}`;
+        const url = `${this.session.url}/WebUntis/api/rest/view/v1/timetable/entries?${params}`;
         const raw = await this.request.get<RawTimetable>(url, headers);
 
         return this.convert(raw);
@@ -64,7 +63,7 @@ export class TimetableModule {
         return {
             Authorization: token,
             "tenant-id": tenantId,
-            "x-webuntis-api-school-year-id": String(schoolYearId),
+            "x-webuntis-api-school-year-id": schoolYearId.toString(),
             Cookie: cookies
         };
     }

@@ -15,7 +15,7 @@ beforeAll(async () => {
 });
 
 test("login", async () => {
-    await client.auth.login(credentials.Username, credentials.Password);
+    await client.auth.login(credentials.username, credentials.password);
 });
 
 test("get own timetable", async () => {
@@ -33,20 +33,11 @@ test("get homeworks", async () => {
     await client.homeworks.get(range);
 });
 
+test("get absences", async () => {
+    const range = { start: new Date("2026"), end: new Date("2027") };
+    await client.absences.get(range);
+});
+
 afterAll(async () => {
     await client.auth.logout();
 });
-
-//
-// test("get profile data", async () => {
-//     await client.getProfile();
-// });
-//
-//
-// test("get homeworks", async () => {
-//     await client.getHomeworks(new Date("2025"), new Date("2026"));
-// });
-//
-// test("get absences", async () => {
-//     await client.getAbsences(new Date("2025"), new Date("2026"));
-// });

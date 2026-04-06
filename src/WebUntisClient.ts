@@ -1,8 +1,9 @@
 import { AppDataManager } from "./managers/AppData";
 import { RequestManager } from "./managers/RequestManager";
 import { TokenManager } from "./managers/TokenManager";
+import { AbsencesModule } from "./modules/Absences";
 import { AuthModule } from "./modules/Auth";
-import { HomeworkModule } from "./modules/Homework";
+import { HomeworksModule } from "./modules/Homeworks";
 import { TimetableModule } from "./modules/Timetable";
 import { JsonRpcClient } from "./network/JsonRpcClient";
 import { Credentials } from "./structures/Credentials";
@@ -11,22 +12,24 @@ import { Session } from "./structures/Session";
 export class WebUntisClient {
     public readonly auth: AuthModule;
     public readonly timetable: TimetableModule;
-    public readonly homeworks: HomeworkModule;
+    public readonly homeworks: HomeworksModule;
+    public readonly absences: AbsencesModule;
 
     constructor(credentials: Credentials) {
-        const session = new Session(credentials.SchoolBase64);
+        const session = new Session(credentials.schoolBase64, credentials.url);
 
         // Managers
         const request = new RequestManager();
-        const token = new TokenManager(request, session, credentials.URL);
-        const appData = new AppDataManager(request, token, session, credentials.URL);
+        const token = new TokenManager(request, session);
+        const appData = new AppDataManager(request, token, session);
 
         // RPC Client
-        const rpc = new JsonRpcClient(request, credentials.URL);
+        const rpc = new JsonRpcClient(request, credentials.url);
 
         // Modules
         this.auth = new AuthModule(rpc, appData, token, session,);
-        this.timetable = new TimetableModule(appData, request, token, session, credentials.URL);
-        this.homeworks = new HomeworkModule(request, session, credentials.URL);
+        this.timetable = new TimetableModule(appData, request, token, session);
+        this.homeworks = new HomeworksModule(request, session);
+        this.absences = new AbsencesModule(appData, request, session);
     }
 }

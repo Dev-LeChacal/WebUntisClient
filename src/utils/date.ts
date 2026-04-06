@@ -17,3 +17,20 @@ export function fromCompact(date: string): Date {
 export function fromISO(date: string): Date {
     return new Date(date);
 }
+
+/**
+ * Combines a compact WebUntis date (20260107) and time (815 or 1150) into a single Date object.
+ */
+export function fromCompactDateTime(date: number | string, time: number | string): Date {
+    const dateStr = String(date);
+    const timeStr = String(time).padStart(4, "0");
+
+    const iso = `${dateStr.slice(0, 4)}-${dateStr.slice(4, 6)}-${dateStr.slice(6, 8)}T${timeStr.slice(0, 2)}:${timeStr.slice(2, 4)}:00`;
+
+    return new Date(iso);
+}
+
+/** Converts a WebUntis Unix timestamp (ms) to a Date object */
+export function fromTimestamp(ts: number): Date {
+    return new Date(ts);
+}

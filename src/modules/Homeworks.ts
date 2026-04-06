@@ -5,19 +5,18 @@ import { DateRange } from "../types/date-range";
 import { RawHomeworks } from "../types/responses/homeworks";
 import { fromCompact, toCompact } from "../utils/date";
 
-export class HomeworkModule {
+export class HomeworksModule {
     constructor(
         private readonly request: RequestManager,
         private readonly session: Session,
-        private readonly baseURL: string,
     ) {
     }
 
-    async get(range: DateRange): Promise<Homework[]> {
+    public async get(range: DateRange): Promise<Homework[]> {
         const params = this.buildParams(range);
         const headers = this.buildHeaders();
 
-        const url = `${this.baseURL}/WebUntis/api/homeworks/lessons?${params}`;
+        const url = `${this.session.url}/WebUntis/api/homeworks/lessons?${params}`;
         const raw = await this.request.get<RawHomeworks>(url, headers);
 
         return this.convert(raw);

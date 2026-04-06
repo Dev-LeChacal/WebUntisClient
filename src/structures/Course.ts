@@ -6,26 +6,26 @@ export type PositionType = "TEACHER" | "SUBJECT" | "ROOM" | string;
 
 export class CoursePosition {
     constructor(
-        readonly type: PositionType,
-        readonly status: PositionStatus,
-        readonly shortName: string,
-        readonly longName: string,
-        readonly displayName: string
+        public readonly type: PositionType,
+        public readonly status: PositionStatus,
+        public readonly shortName: string,
+        public readonly longName: string,
+        public readonly displayName: string
     ) {
     }
 }
 
 export class Course {
     constructor(
-        readonly id: number,
-        readonly from: Date,
-        readonly to: Date,
-        readonly status: CourseStatus,
-        readonly type: CourseType,
-        readonly color: string,
-        readonly teacher: CoursePosition | null = null,
-        readonly subject: CoursePosition | null = null,
-        readonly room: CoursePosition | null = null
+        public readonly id: number,
+        public readonly from: Date,
+        public readonly to: Date,
+        public readonly status: CourseStatus,
+        public readonly type: CourseType,
+        public readonly color: string,
+        public readonly teacher: CoursePosition | null = null,
+        public readonly subject: CoursePosition | null = null,
+        public readonly room: CoursePosition | null = null
     ) {
     }
 }

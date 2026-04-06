@@ -12,11 +12,10 @@ export class AppDataManager {
         private readonly request: RequestManager,
         private readonly token: TokenManager,
         private readonly session: Session,
-        private readonly baseURL: string,
     ) {
     }
 
-    async get(): Promise<AppData> {
+    public async get(): Promise<AppData> {
         if ( this.cache !== null ) {
             return this.cache;
         }
@@ -25,7 +24,7 @@ export class AppDataManager {
         const tenantId = this.token.getTenantId();
         const cookies = this.session.getCookies();
 
-        const url = `${this.baseURL}/WebUntis/api/rest/view/v1/app/data`;
+        const url = `${this.session.url}/WebUntis/api/rest/view/v1/app/data`;
         this.cache = await this.request.get<AppData>(url, {
             Authorization: token,
             "tenant-id": tenantId,
@@ -35,13 +34,18 @@ export class AppDataManager {
         return this.cache;
     }
 
-    clear() {
+    public clear() {
         this.cache = null;
     }
 
-    async getSchoolYearId(): Promise<number> {
+    public async getSchoolYearId(): Promise<number> {
         await this.getIfNull();
         return this.cache!.currentSchoolYear.id;
+    }
+
+    public async getStudentId(): Promise<number> {
+        await this.getIfNull();
+        return this.cache!.user.person.id;
     }
 
     private async getIfNull() {

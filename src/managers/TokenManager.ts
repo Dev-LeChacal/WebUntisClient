@@ -13,7 +13,6 @@ export class TokenManager {
     constructor(
         private readonly request: RequestManager,
         private readonly session: Session,
-        private readonly baseURL: string,
     ) {
     }
 
@@ -21,7 +20,7 @@ export class TokenManager {
         const cookies = this.session.getCookies();
 
         const token = await this.request.getText(
-            `${this.baseURL}/WebUntis/api/token/new`,
+            `${this.session.url}/WebUntis/api/token/new`,
             { Cookie: cookies }
         );
 

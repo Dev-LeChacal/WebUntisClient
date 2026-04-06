@@ -5,7 +5,10 @@ import { RawSessionInfo } from "../types/responses/session";
 export class Session {
     private session: CurrentSessionInfo = null;
 
-    constructor(private readonly schoolBase64: string) {
+    constructor(
+        public readonly schoolBase64: string,
+        public readonly url: string
+    ) {
     }
 
     set(raw: RawSessionInfo): void {

@@ -68,10 +68,12 @@ await client.homeworks.get(range);
 ### Absences
 
 ```typescript
-const start = new Date("2026");
-const end = new Date("2027");
+const range = {
+    start: new Date("2026"),
+    end: new Date("2027"),
+}
 
-await client.getAbsences(start, end);
+await client.absences.get(range);
 ```
 
 ## Installation
