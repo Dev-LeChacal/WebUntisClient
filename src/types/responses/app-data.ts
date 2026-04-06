@@ -1,62 +1,62 @@
-interface TimeUnit {
+interface RawTimeUnit {
     endTime: number;
     startTime: number;
     unitOfDay: number;
 }
 
-interface TimeGrid {
+interface RawTimeGrid {
     schoolyearId: number;
-    units: TimeUnit[];
+    units: RawTimeUnit[];
 }
 
-interface DateRange {
+interface RawDateRange {
     start: string;
     end: string;
 }
 
-interface CurrentSchoolYear {
-    dateRange: DateRange;
+interface RawCurrentSchoolYear {
+    dateRange: RawDateRange;
     id: number;
     name: string;
-    timeGrid: TimeGrid;
+    timeGrid: RawTimeGrid;
 }
 
-interface OneDriveData {
+interface RawOneDriveData {
     hasOneDriveRight: boolean;
     oneDriveClientVersion: string;
     oneDriveClientId: string;
 }
 
-interface Tenant {
+interface RawTenant {
     displayName: string;
     id: string;
     wuHostName: string | null;
     name: string;
 }
 
-interface Person {
+interface RawPerson {
     displayName: string;
     id: number;
     imageUrl: string;
 }
 
-interface Permissions {
+interface RawPermissions {
     views: string[];
 }
 
-interface User {
+interface RawUser {
     id: number;
     locale: string;
     name: string;
     email: string;
-    permissions: Permissions;
-    person: Person;
+    permissions: RawPermissions;
+    person: RawPerson;
     roles: string[];
     students: unknown[];
     lastLogin: string;
 }
 
-interface Holiday {
+interface RawHoliday {
     id: number;
     name: string;
     start: string;
@@ -65,17 +65,17 @@ interface Holiday {
 }
 
 export interface RawAppData {
-    currentSchoolYear: CurrentSchoolYear;
+    currentSchoolYear: RawCurrentSchoolYear;
     departments: unknown[];
     isPlayground: boolean;
-    oneDriveData: OneDriveData;
-    tenant: Tenant;
+    oneDriveData: RawOneDriveData;
+    tenant: RawTenant;
     ui2020: boolean;
-    user: User;
+    user: RawUser;
     permissions: string[];
     settings: string[];
     pollingJobs: unknown[];
     isSupportAccessOpen: boolean;
     licenceExpiresAt: string;
-    holidays: Holiday[];
+    holidays: RawHoliday[];
 }

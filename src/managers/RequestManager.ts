@@ -8,7 +8,7 @@ export class RequestManager {
     private queue: QueuedTask[] = [];
     private isProcessing = false;
 
-    enqueue<T>(fn: () => Promise<T>): Promise<T> {
+    public enqueue<T>(fn: () => Promise<T>): Promise<T> {
         return new Promise<T>((resolve, reject) => {
             const task: QueuedTask = {
                 execute: async () => {
@@ -26,7 +26,7 @@ export class RequestManager {
         });
     }
 
-    async get<T>(url: string, headers?: Record<string, string>): Promise<T> {
+    public async get<T>(url: string, headers?: Record<string, string>): Promise<T> {
         return this.enqueue(() =>
             fetch(url, { headers }).then(res => {
                 if ( !res.ok ) {
@@ -38,7 +38,7 @@ export class RequestManager {
         );
     }
 
-    async getText(url: string, headers?: Record<string, string>): Promise<string> {
+    public async getText(url: string, headers?: Record<string, string>): Promise<string> {
         return this.enqueue(() =>
             fetch(url, { headers }).then(res => {
                 if ( !res.ok ) {
@@ -50,7 +50,7 @@ export class RequestManager {
         );
     }
 
-    async post<T>(url: string, body: object, headers?: Record<string, string>): Promise<T> {
+    public async post<T>(url: string, body: object, headers?: Record<string, string>): Promise<T> {
         return this.enqueue(() =>
             fetch(url, {
                 method: "POST",

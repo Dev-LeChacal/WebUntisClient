@@ -14,7 +14,7 @@ export class JsonRpcClient {
         this.endpoint = `${baseURL}/WebUntis/jsonrpc.do`;
     }
 
-    async login(username: string, password: string): Promise<RawSessionInfo> {
+    public async login(username: string, password: string): Promise<RawSessionInfo> {
         const result = await this.call<RawSessionInfo>("authenticate", {
             user: username,
             password: password,
@@ -28,7 +28,7 @@ export class JsonRpcClient {
         return result;
     }
 
-    async logout(cookies: string): Promise<void> {
+    public async logout(cookies: string): Promise<void> {
         await this.call("logout", {}, cookies);
     }
 

@@ -16,7 +16,7 @@ export class TokenManager {
     ) {
     }
 
-    async fetchToken(): Promise<void> {
+    public async fetchToken(): Promise<void> {
         const cookies = this.session.getCookies();
 
         const token = await this.request.getText(
@@ -29,7 +29,7 @@ export class TokenManager {
         this.tenantId = this.decodeJWT(token);
     }
 
-    async getToken(): Promise<string> {
+    public async getToken(): Promise<string> {
         if ( this.token === null || this.isTokenExpired() ) {
             await this.fetchToken();
         }
@@ -41,7 +41,7 @@ export class TokenManager {
         return this.token;
     }
 
-    getTenantId(): string {
+    public getTenantId(): string {
         if ( this.tenantId === null ) {
             throw new AuthError("No tenant id");
         }
@@ -49,7 +49,7 @@ export class TokenManager {
         return this.tenantId;
     }
 
-    clear(): void {
+    public clear(): void {
         this.token = null;
         this.tenantId = null;
         this.expiryTime = 0;

@@ -1,6 +1,6 @@
 import { Course } from "./Course";
 
-export type DayStatus = "REGULAR" | string;
+type DayStatus = "REGULAR" | string;
 
 export class Day {
     constructor(

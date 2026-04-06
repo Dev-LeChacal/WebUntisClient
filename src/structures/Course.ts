@@ -1,8 +1,8 @@
-export type CourseStatus = "REGULAR" | "CHANGED" | string;
-export type CourseType = "NORMAL_TEACHING_PERIOD" | "EXAM" | string;
+type CourseStatus = "REGULAR" | "CHANGED" | string;
+type CourseType = "NORMAL_TEACHING_PERIOD" | "EXAM" | string;
 
-export type PositionStatus = "REGULAR" | "ADDED" | "NO_DATA" | string;
-export type PositionType = "TEACHER" | "SUBJECT" | "ROOM" | string;
+type PositionStatus = "REGULAR" | "ADDED" | "NO_DATA" | string;
+type PositionType = "TEACHER" | "SUBJECT" | "ROOM" | string;
 
 export class CoursePosition {
     constructor(

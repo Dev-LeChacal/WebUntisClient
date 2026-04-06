@@ -1,9 +1,9 @@
 import { AuthError } from "../errors/Auth";
-import { CurrentSessionInfo } from "../types/current-session-info";
+import { CurrentSession } from "../types/current-session";
 import { RawSessionInfo } from "../types/responses/session";
 
 export class Session {
-    private session: CurrentSessionInfo = null;
+    private session: CurrentSession = null;
 
     constructor(
         public readonly schoolBase64: string,
@@ -11,7 +11,7 @@ export class Session {
     ) {
     }
 
-    set(raw: RawSessionInfo): void {
+    public set(raw: RawSessionInfo): void {
         if ( raw.sessionId === undefined || raw.klasseId === undefined || raw.personId === undefined || raw.personType === undefined ) {
             const properties = (["sessionId", "klasseId", "personId", "personType"] as (keyof RawSessionInfo)[]);
             const missing = properties.filter(key => raw[key] === undefined);
@@ -27,19 +27,19 @@ export class Session {
         };
     }
 
-    get(): CurrentSessionInfo {
+    public get(): CurrentSession {
         return this.session;
     }
 
-    clear(): void {
+    public clear(): void {
         this.session = null;
     }
 
-    isAuthenticated(): boolean {
+    public isAuthenticated(): boolean {
         return this.session !== null;
     }
 
-    getCookies(): string {
+    public getCookies(): string {
         if ( this.session === null ) {
             throw new AuthError("Tried to get cookies but session is null");
         }
@@ -47,7 +47,7 @@ export class Session {
         return `JSESSIONID=${this.session.sessionId}; schoolname=${this.schoolBase64}`;
     }
 
-    getPersonId(): number {
+    public getPersonId(): number {
         if ( this.session === null ) {
             throw new AuthError("Tried to get person id but session is null");
         }
@@ -55,7 +55,7 @@ export class Session {
         return this.session.personId;
     }
 
-    getClassId(): number {
+    public getClassId(): number {
         if ( this.session === null ) {
             throw new AuthError("Tried to get class id but session is null");
         }

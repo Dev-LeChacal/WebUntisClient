@@ -1,16 +1,16 @@
-interface Duration {
+interface RawDuration {
     start: string;
     end: string;
 }
 
-interface Resource {
+interface RawResource {
     id: number;
     shortName: string;
     longName: string;
     displayName: string;
 }
 
-interface PositionData {
+interface RawPositionData {
     type: string;
     status: string;
     shortName: string;
@@ -19,19 +19,19 @@ interface PositionData {
     displayNameLabel: string;
 }
 
-interface Text {
+interface RawText {
     type: string;
     text: string;
 }
 
 export interface RawPosition {
-    current: PositionData;
+    current: RawPositionData;
     removed: unknown | null;
 }
 
 export interface RawGridEntry {
     ids: number[];
-    duration: Duration;
+    duration: RawDuration;
     type: string;
     status: string;
     statusDetail: string | null;
@@ -49,7 +49,7 @@ export interface RawGridEntry {
     position5: RawPosition[] | null;
     position6: RawPosition[];
     position7: RawPosition[];
-    texts: Text[];
+    texts: RawText[];
     lessonText: string;
     lessonInfo: string | null;
     substitutionText: string;
@@ -62,7 +62,7 @@ export interface RawGridEntry {
 export interface RawDay {
     date: string;
     resourceType: string;
-    resource: Resource;
+    resource: RawResource;
     status: string;
     dayEntries: [];
     gridEntries: RawGridEntry[];

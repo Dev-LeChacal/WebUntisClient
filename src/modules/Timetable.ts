@@ -17,11 +17,11 @@ export class TimetableModule {
     ) {
     }
 
-    async getOwn(range: DateRange): Promise<Day[]> {
+    public async getOwn(range: DateRange): Promise<Day[]> {
         return this.fetch(range, true, this.session.getPersonId());
     }
 
-    async getClass(range: DateRange): Promise<Day[]> {
+    public async getClass(range: DateRange): Promise<Day[]> {
         return this.fetch(range, false, this.session.getClassId());
     }
 

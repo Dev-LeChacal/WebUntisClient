@@ -1,10 +1,15 @@
-interface HomeworkRecord {
+interface RawHomeworkRecord {
     homeworkId: number;
     teacherId: number;
     elementIds: number[];
 }
 
-export interface RawHomework {
+interface RawTeacher {
+    id: number;
+    name: string;
+}
+
+interface RawHomework {
     id: number;
     lessonId: number;
     date: number;
@@ -15,24 +20,19 @@ export interface RawHomework {
     attachments: unknown[];
 }
 
-interface Teacher {
-    id: number;
-    name: string;
-}
-
-export interface RawLesson {
+interface RawLesson {
     id: number;
     subject: string;
     lessonType: string;
 }
 
-export interface HomeworksData {
-    records: HomeworkRecord[];
+interface RawHomeworksData {
+    records: RawHomeworkRecord[];
     homeworks: RawHomework[];
-    teachers: Teacher[];
+    teachers: RawTeacher[];
     lessons: RawLesson[];
 }
 
 export interface RawHomeworks {
-    data: HomeworksData;
+    data: RawHomeworksData;
 }

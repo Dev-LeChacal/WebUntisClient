@@ -3,6 +3,7 @@ import { AppDataManager } from "../managers/AppData";
 import { TokenManager } from "../managers/TokenManager";
 import { JsonRpcClient } from "../network/JsonRpcClient";
 import { Session } from "../structures/Session";
+import { CurrentSession } from "../types/current-session";
 import { SessionInfo } from "../types/session";
 
 export class AuthModule {
@@ -14,7 +15,7 @@ export class AuthModule {
     ) {
     }
 
-    async login(username: string, password: string): Promise<SessionInfo> {
+    public async login(username: string, password: string): Promise<SessionInfo> {
         const raw = await this.rpc.login(username, password);
         this.session.set(raw);
         await this.token.fetchToken();
@@ -30,7 +31,7 @@ export class AuthModule {
         return session;
     }
 
-    async logout(): Promise<void> {
+    public async logout(): Promise<void> {
         try {
             const cookies = this.session.getCookies();
             await this.rpc.logout(cookies);
@@ -42,11 +43,11 @@ export class AuthModule {
         }
     }
 
-    isAuthenticated(): boolean {
+    public isAuthenticated(): boolean {
         return this.session.isAuthenticated();
     }
 
-    getSession(): SessionInfo | null {
+    public getSession(): CurrentSession {
         return this.session.get();
     }
 }
