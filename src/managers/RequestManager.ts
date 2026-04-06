@@ -68,34 +68,25 @@ export class RequestManager {
   }
 
   public async post<T>(url: string, body: object, headers?: Record<string, string>): Promise<T> {
-    return this.enqueue(async () => {
-      console.log("[POST]", url);
+    return this.enqueue(() =>
+      fetch(url, {
+        method: "POST",
+        body: JSON.stringify(body),
+        headers: {
+          ...this.defaultHeaders,
+          ...headers,
+          "Content-Type": "application/json"
+        },
 
-      try {
-        const res = await fetch(url, {
-          method: "POST",
-          body: JSON.stringify(body),
-          headers: {
-            ...this.defaultHeaders,
-            ...headers,
-            "Content-Type": "application/json"
-          },
-        });
-
-        console.log("[POST STATUS]", res.status);
-
+      }).then(async res => {
         if ( !res.ok ) {
           throw new NetworkError(`${res.status} ${res.statusText}`);
         }
 
         const text = await res.text();
-
-        return await (JSON.parse(text) as T);
-      } catch ( err ) {
-        console.log("[POST FAILED]", url, err);
-        throw err;
-      }
-    });
+        return JSON.parse(text) as T;
+      })
+    );
   }
 
   private async processQueue(): Promise<void> {
