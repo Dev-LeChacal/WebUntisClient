@@ -1,6 +1,6 @@
 {
   "name": "webuntis-client",
-  "version": "2.0.10",
+  "version": "2.0.11",
   "description": "A Web Untis API Client",
   "main": "dist/index.js",
   "module": "dist/index.js",
