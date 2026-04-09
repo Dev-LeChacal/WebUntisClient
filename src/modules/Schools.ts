@@ -1,4 +1,4 @@
-import { AuthError } from "../errors/Auth";
+import { SearchError } from "../errors/Search";
 import { RequestManager } from "../managers/RequestManager";
 import { School } from "../structures";
 import { RawSchools } from "../types/responses/schools";
@@ -31,7 +31,7 @@ export class SchoolsModule {
     );
 
     if ( response.error ) {
-      throw new AuthError(`${response.error.message} (${response.error.code})`);
+      throw new SearchError(`${response.error.message} (${response.error.code})`);
     }
 
     const rawSchools = response.result.schools;
