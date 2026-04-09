@@ -23,7 +23,7 @@ const credentials = new Credentials(
   "password",
 );
 
-const client = new WebUntis(credentials);
+const client = new WebUntisClient(credentials);
 
 await client.auth.login();
 
