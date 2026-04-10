@@ -36,8 +36,8 @@ await client.auth.logout();
 
 ```typescript
 const range = {
-    start: new Date("2026"),
-    end: new Date("2027"),
+  start: new Date("2026"),
+  end: new Date("2027"),
 }
 
 await client.timetable.getOwn(range);
@@ -47,8 +47,8 @@ await client.timetable.getOwn(range);
 
 ```typescript
 const range = {
-    start: new Date("2026"),
-    end: new Date("2027"),
+  start: new Date("2026"),
+  end: new Date("2027"),
 }
 
 await client.timetable.getClass(range);
@@ -58,8 +58,8 @@ await client.timetable.getClass(range);
 
 ```typescript
 const range = {
-    start: new Date("2026"),
-    end: new Date("2027"),
+  start: new Date("2026"),
+  end: new Date("2027"),
 }
 
 await client.homeworks.get(range);
@@ -69,11 +69,17 @@ await client.homeworks.get(range);
 
 ```typescript
 const range = {
-    start: new Date("2026"),
-    end: new Date("2027"),
+  start: new Date("2026"),
+  end: new Date("2027"),
 }
 
 await client.absences.get(range);
+```
+
+### Data
+
+```typescript
+client.data.get();
 ```
 
 ## Installation
