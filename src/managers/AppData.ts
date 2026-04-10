@@ -9,9 +9,8 @@ export class AppDataManager {
   constructor(
     private readonly request: RequestManager,
     private readonly token: TokenManager,
-    private readonly session: Session,
-  ) {
-  }
+    private readonly session: Session
+  ) { }
 
   public async get(): Promise<AppData> {
     const token = `Bearer ${await this.token.getToken()}`;
@@ -26,6 +25,10 @@ export class AppDataManager {
       Cookie: cookies
     });
 
+    return this.cache;
+  }
+
+  public getFromCache(): AppData {
     return this.cache;
   }
 
