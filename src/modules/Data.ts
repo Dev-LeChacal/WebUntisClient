@@ -18,56 +18,56 @@ export class DataModule {
 
   // --- Tenant ---
 
-  public async getTenantDisplayName(): Promise<string> {
+  public getTenantDisplayName(): string {
     const data = this.get();
     return data.tenant.displayName;
   }
 
-  public async getTenantName(): Promise<string> {
+  public getTenantName(): string {
     const data = this.get();
     return data.tenant.name;
   }
 
-  public async getTenantId(): Promise<string> {
+  public getTenantId(): string {
     const data = this.get();
     return data.tenant.id;
   }
 
   // --- User ---
 
-  public async getUserEmail(): Promise<string> {
+  public getUserEmail(): string {
     const data = this.get();
     return data.user.email;
   }
 
-  public async getUserName(): Promise<string> {
+  public getUserName(): string {
     const data = this.get();
     return data.user.name;
   }
 
-  public async getUserId(): Promise<string> {
+  public getUserId(): string {
     const data = this.get();
     return data.user.id.toString();
   }
 
-  public async getUserLocale(): Promise<string> {
+  public getUserLocale(): string {
     const data = this.get();
     return data.user.locale;
   }
 
   // --- Person ---
 
-  public async getPersonImageURL(): Promise<string> {
+  public getPersonImageURL(): string {
     const data = this.get();
     return data.user.person.imageUrl;
   }
 
-  public async getPersonDisplayName(): Promise<string> {
+  public getPersonDisplayName(): string {
     const data = this.get();
     return data.user.person.displayName;
   }
 
-  public async getPersonId(): Promise<string> {
+  public getPersonId(): string {
     const data = this.get();
     return data.user.person.id.toString();
   }

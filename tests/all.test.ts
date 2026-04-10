@@ -41,8 +41,8 @@ test("get absences", async () => {
   await client.absences.get(range);
 });
 
-test("get person display name", async () => {
-  await client.data.getPersonDisplayName();
+test("get app data", () => {
+  client.data.get();
 });
 
 test("search schools", async () => {

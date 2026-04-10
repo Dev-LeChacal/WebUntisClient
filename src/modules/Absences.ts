@@ -13,9 +13,8 @@ export class AbsencesModule {
   constructor(
     private readonly appData: AppDataManager,
     private readonly request: RequestManager,
-    private readonly session: Session,
-  ) {
-  }
+    private readonly session: Session
+  ) {}
 
   /**
    * Get absences for a given range
@@ -34,7 +33,7 @@ export class AbsencesModule {
   private async buildParams(range: DateRange): Promise<URLSearchParams> {
     const start = toCompact(range.start);
     const end = toCompact(range.end);
-    const studentId = await this.appData.getStudentId();
+    const studentId = this.appData.getStudentId();
     const excuseStatusId = "-1";
 
     return new URLSearchParams({
@@ -43,7 +42,7 @@ export class AbsencesModule {
       studentId: studentId.toString(),
       excuseStatusId: excuseStatusId,
       excludeAbsences: "false",
-      excludeLateness: "true",
+      excludeLateness: "true"
     });
   }
 
@@ -52,7 +51,7 @@ export class AbsencesModule {
 
     return {
       Cookie: cookies
-    }
+    };
   }
 
   private convert(raw: RawAbsences): Absence[] {
@@ -76,7 +75,7 @@ export class AbsencesModule {
         text: a.text,
         isExcused: a.isExcused,
         excuse: this.convertExcuse(a.excuse),
-        times,
+        times
       });
     }
 
@@ -90,7 +89,7 @@ export class AbsencesModule {
       fromCompactDateTime(raw.date, raw.startTime),
       fromCompactDateTime(raw.date, raw.endTime),
       raw.counting,
-      raw.excused,
+      raw.excused
     );
   }
 
