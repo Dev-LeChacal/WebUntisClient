@@ -4,7 +4,7 @@ import { Credentials, SearchClient, WebUntisClient } from "../src";
 
 let client: WebUntisClient;
 let credentials: Credentials;
-let schoolsClient: SearchClient;
+let searchClient: SearchClient;
 
 beforeAll(async () => {
   credentials = new Credentials(
@@ -14,7 +14,7 @@ beforeAll(async () => {
   );
 
   client = new WebUntisClient(credentials);
-  schoolsClient = new SearchClient();
+  searchClient = new SearchClient();
 });
 
 test("login", async () => {
@@ -46,7 +46,7 @@ test("get app data", () => {
 });
 
 test("search schools", async () => {
-  await schoolsClient.getSchools("Louis");
+  await searchClient.getSchools("Louis");
 });
 
 afterAll(async () => {
