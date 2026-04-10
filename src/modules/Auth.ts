@@ -6,6 +6,9 @@ import { Session } from "../structures/Session";
 import { CurrentSession } from "../types/current-session";
 import { SessionInfo } from "../types/session";
 
+/**
+ * Handles authentication
+ */
 export class AuthModule {
   constructor(
     private readonly rpc: JsonRpcClient,
@@ -15,6 +18,11 @@ export class AuthModule {
   ) {
   }
 
+  /**
+   * Login with credentials
+   * @param username
+   * @param password
+   */
   public async login(username: string, password: string): Promise<SessionInfo> {
     const raw = await this.rpc.login(username, password);
     this.session.set(raw);
@@ -31,6 +39,9 @@ export class AuthModule {
     return session;
   }
 
+  /**
+   * Logout the current session
+   */
   public async logout(): Promise<void> {
     try {
       const cookies = this.session.getCookies();
@@ -43,10 +54,16 @@ export class AuthModule {
     }
   }
 
+  /**
+   * Check if the current session is valid
+   */
   public isAuthenticated(): boolean {
     return this.session.isAuthenticated();
   }
 
+  /**
+   * Returns the current session information
+   */
   public getSession(): CurrentSession {
     return this.session.get();
   }

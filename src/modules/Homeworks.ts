@@ -1,10 +1,13 @@
 import { RequestManager } from "../managers/Request";
-import { Homework } from "../structures/Homework";
+import { Homework } from "../structures";
 import { Session } from "../structures/Session";
 import { DateRange } from "../types/date-range";
 import { RawHomeworks } from "../types/responses/homeworks";
 import { fromCompact, toCompact } from "../utils/date";
 
+/**
+ * Provides access to homework assignments
+ */
 export class HomeworksModule {
   constructor(
     private readonly request: RequestManager,

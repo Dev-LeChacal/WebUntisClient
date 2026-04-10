@@ -1,13 +1,16 @@
 import { AppDataManager } from "../managers/AppData";
 import { RequestManager } from "../managers/Request";
 import { TokenManager } from "../managers/Token";
+import { Day } from "../structures";
 import { Course, CoursePosition } from "../structures/Course";
-import { Day } from "../structures/Day";
 import { Session } from "../structures/Session";
 import { DateRange } from "../types/date-range";
 import { RawDay, RawGridEntry, RawPosition, RawTimetable } from "../types/responses/timetable";
 import { fromISO, toISO } from "../utils/date";
 
+/**
+ * Provides access to timetable data
+ */
 export class TimetableModule {
   constructor(
     private readonly appData: AppDataManager,
@@ -17,10 +20,18 @@ export class TimetableModule {
   ) {
   }
 
+  /**
+   * Get own timetable for a given range
+   * @param range
+   */
   public async getOwn(range: DateRange): Promise<Day[]> {
     return this.fetch(range, true, this.session.getPersonId());
   }
 
+  /**
+   * Get class timetable for a given range
+   * @param range
+   */
   public async getClass(range: DateRange): Promise<Day[]> {
     return this.fetch(range, false, this.session.getClassId());
   }
