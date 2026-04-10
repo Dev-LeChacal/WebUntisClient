@@ -22,7 +22,7 @@ export class JsonRpcClient {
     });
 
     if ( result.sessionId === undefined ) {
-      throw new AuthError("Authentication failed");
+      throw new AuthError("Failed to login");
     }
 
     return result;
@@ -54,10 +54,6 @@ export class JsonRpcClient {
 
     if ( response.error ) {
       throw new AuthError(`${response.error.message} (${response.error.code})`);
-    }
-
-    if ( response.result === null && method !== "logout" ) {
-      throw new AuthError("Invalid response");
     }
 
     return response.result as T;

@@ -1,10 +1,10 @@
 import { afterAll, beforeAll, test } from "bun:test";
 
-import { Credentials, SchoolsClient, WebUntisClient } from "../src";
+import { Credentials, SearchClient, WebUntisClient } from "../src";
 
 let client: WebUntisClient;
 let credentials: Credentials;
-let schoolsClient: SchoolsClient;
+let schoolsClient: SearchClient;
 
 beforeAll(async () => {
   credentials = new Credentials(
@@ -14,7 +14,7 @@ beforeAll(async () => {
   );
 
   client = new WebUntisClient(credentials);
-  schoolsClient = new SchoolsClient();
+  schoolsClient = new SearchClient();
 });
 
 test("login", async () => {
@@ -46,7 +46,7 @@ test("get person display name", async () => {
 });
 
 test("search schools", async () => {
-  await schoolsClient.search("Louis");
+  await schoolsClient.getSchools("Louis");
 });
 
 afterAll(async () => {

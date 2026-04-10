@@ -31,7 +31,7 @@ export class SchoolsModule {
     );
 
     if ( response.error ) {
-      throw new SearchError(`${response.error.message} (${response.error.code})`);
+      throw new SearchError(`${response.error.message} (${response.error.code}) | Query: ${query}`);
     }
 
     const rawSchools = response.result.schools;
