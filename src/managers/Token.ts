@@ -1,6 +1,6 @@
-import { AuthError } from "../errors/Auth";
+import { TokenError } from "../errors/Token";
 import { Session } from "../structures/Session";
-import { RequestManager } from "./RequestManager";
+import { RequestManager } from "./Request";
 
 export class TokenManager {
   private readonly TOKEN_BUFFER_MS = 30000; // 30 sec
@@ -35,7 +35,7 @@ export class TokenManager {
     }
 
     if ( this.token === null ) {
-      throw new AuthError("Token not found");
+      throw new TokenError("Token not found");
     }
 
     return this.token;
@@ -43,7 +43,7 @@ export class TokenManager {
 
   public getTenantId(): string {
     if ( this.tenantId === null ) {
-      throw new AuthError("No tenant id");
+      throw new TokenError("No tenant id");
     }
 
     return this.tenantId;
@@ -59,7 +59,7 @@ export class TokenManager {
     const parts = token.split(".");
 
     if ( parts.length !== 3 ) {
-      throw new Error("Invalid JWT format");
+      throw new TokenError("Invalid JWT format");
     }
 
     const payload = parts[1];

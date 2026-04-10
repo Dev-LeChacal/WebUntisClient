@@ -1,5 +1,5 @@
 import { SearchError } from "../errors/Search";
-import { RequestManager } from "../managers/RequestManager";
+import { RequestManager } from "../managers/Request";
 import { School } from "../structures";
 import { RawSchools } from "../types/responses/schools";
 

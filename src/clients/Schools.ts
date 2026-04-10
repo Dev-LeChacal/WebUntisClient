@@ -1,4 +1,4 @@
-import { RequestManager } from "../managers/RequestManager";
+import { RequestManager } from "../managers/Request";
 import { SchoolsModule } from "../modules/Schools";
 import { School } from "../structures";
 

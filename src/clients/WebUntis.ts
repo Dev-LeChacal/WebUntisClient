@@ -1,6 +1,6 @@
 import { AppDataManager } from "../managers/AppData";
-import { RequestManager } from "../managers/RequestManager";
-import { TokenManager } from "../managers/TokenManager";
+import { RequestManager } from "../managers/Request";
+import { TokenManager } from "../managers/Token";
 import { AbsencesModule } from "../modules/Absences";
 import { AuthModule } from "../modules/Auth";
 import { DataModule } from "../modules/Data";

@@ -1,7 +1,7 @@
 import { JsonRpcClient } from "../clients/JsonRpc";
 import { AuthError } from "../errors/Auth";
 import { AppDataManager } from "../managers/AppData";
-import { TokenManager } from "../managers/TokenManager";
+import { TokenManager } from "../managers/Token";
 import { Session } from "../structures/Session";
 import { CurrentSession } from "../types/current-session";
 import { SessionInfo } from "../types/session";

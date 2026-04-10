@@ -1,5 +1,5 @@
 import { AuthError } from "../errors/Auth";
-import { RequestManager } from "../managers/RequestManager";
+import { RequestManager } from "../managers/Request";
 import { JsonRpcResponse } from "../types/responses/json-rpc";
 import { RawSessionInfo } from "../types/responses/session";
 

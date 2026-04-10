@@ -1,7 +1,6 @@
 import { afterAll, beforeAll, test } from "bun:test";
 
-import { Credentials, WebUntisClient } from "../src";
-import { SchoolsClient } from "../src/clients/Schools";
+import { Credentials, SchoolsClient, WebUntisClient } from "../src";
 
 let client: WebUntisClient;
 let credentials: Credentials;

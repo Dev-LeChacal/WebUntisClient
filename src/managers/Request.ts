@@ -42,7 +42,7 @@ export class RequestManager {
         }
       }).then(res => {
         if ( !res.ok ) {
-          throw new NetworkError(`${res.status} ${res.statusText}`);
+          throw new NetworkError(`Get: ${res.status} ${res.statusText} | Url: ${url} | Headers: ${headers}`);
         }
 
         return res.json() as Promise<T>;
@@ -59,7 +59,7 @@ export class RequestManager {
         }
       }).then(res => {
         if ( !res.ok ) {
-          throw new NetworkError(`${res.status} ${res.statusText}`);
+          throw new NetworkError(`Get text: ${res.status} ${res.statusText} | Url: ${url} | Headers: ${headers}`);
         }
 
         return res.text();
@@ -80,7 +80,7 @@ export class RequestManager {
 
       }).then(async res => {
         if ( !res.ok ) {
-          throw new NetworkError(`${res.status} ${res.statusText}`);
+          throw new NetworkError(`Post: ${res.status} ${res.statusText} | Url: ${url} | Headers: ${headers}`);
         }
 
         const text = await res.text();
