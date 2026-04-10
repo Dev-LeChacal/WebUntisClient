@@ -3,10 +3,8 @@ import { AppData } from "../types/app-data";
 import { RequestManager } from "./Request";
 import { TokenManager } from "./Token";
 
-type CurrentAppData = AppData | null;
-
 export class AppDataManager {
-  private cache: CurrentAppData = null;
+  private cache!: AppData;
 
   constructor(
     private readonly request: RequestManager,
@@ -16,15 +14,12 @@ export class AppDataManager {
   }
 
   public async get(): Promise<AppData> {
-    if ( this.cache !== null ) {
-      return this.cache;
-    }
-
     const token = `Bearer ${await this.token.getToken()}`;
     const tenantId = this.token.getTenantId();
     const cookies = this.session.getCookies();
 
     const url = `${this.session.url}/WebUntis/api/rest/view/v1/app/data`;
+
     this.cache = await this.request.get<AppData>(url, {
       Authorization: token,
       "tenant-id": tenantId,
@@ -34,23 +29,11 @@ export class AppDataManager {
     return this.cache;
   }
 
-  public clear() {
-    this.cache = null;
+  public getSchoolYearId(): number {
+    return this.cache.currentSchoolYear.id;
   }
 
-  public async getSchoolYearId(): Promise<number> {
-    await this.getIfNull();
-    return this.cache!.currentSchoolYear.id;
-  }
-
-  public async getStudentId(): Promise<number> {
-    await this.getIfNull();
-    return this.cache!.user.person.id;
-  }
-
-  private async getIfNull() {
-    if ( this.cache === null ) {
-      await this.get();
-    }
+  public getStudentId(): number {
+    return this.cache.user.person.id;
   }
 }

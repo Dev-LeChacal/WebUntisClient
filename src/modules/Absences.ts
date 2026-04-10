@@ -6,6 +6,9 @@ import { DateRange } from "../types/date-range";
 import { RawAbsences, RawAbsenceTime, RawExcuse } from "../types/responses/absences";
 import { fromCompactDateTime, fromTimestamp, toCompact } from "../utils/date";
 
+/**
+ * Provides access to absences
+ */
 export class AbsencesModule {
   constructor(
     private readonly appData: AppDataManager,
@@ -14,6 +17,10 @@ export class AbsencesModule {
   ) {
   }
 
+  /**
+   * Get absences for a given range
+   * @param range
+   */
   public async get(range: DateRange): Promise<Absence[]> {
     const params = await this.buildParams(range);
     const headers = this.buildHeaders();

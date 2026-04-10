@@ -20,13 +20,13 @@ export class WebUntisClient {
   /** Provides access to timetable data */
   public readonly timetable: TimetableModule;
 
-  /** Provides access to homework assignments */
+  /** Provides access to homeworks */
   public readonly homeworks: HomeworksModule;
 
-  /** Provides access to absence records */
+  /** Provides access to absences */
   public readonly absences: AbsencesModule;
 
-  /** Provides access to general app data */
+  /** Provides access to app data */
   public readonly data: DataModule;
 
   /**

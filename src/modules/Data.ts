@@ -1,12 +1,18 @@
 import { AppDataManager } from "../managers/AppData";
 import { AppData } from "../types/app-data";
 
+/**
+ * Provides access to app data
+ */
 export class DataModule {
   constructor(
     private readonly appData: AppDataManager
   ) {
   }
 
+  /**
+   * Returns the app data
+   */
   public async get(): Promise<AppData> {
     return await this.appData.get();
   }

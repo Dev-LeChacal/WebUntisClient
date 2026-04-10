@@ -15,6 +15,10 @@ export class HomeworksModule {
   ) {
   }
 
+  /**
+   * Get homeworks for a given range
+   * @param range
+   */
   public async get(range: DateRange): Promise<Homework[]> {
     const params = this.buildParams(range);
     const headers = this.buildHeaders();

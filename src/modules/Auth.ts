@@ -50,7 +50,6 @@ export class AuthModule {
     } finally {
       this.session.clear();
       this.token.clear();
-      this.appData.clear();
     }
   }
 
