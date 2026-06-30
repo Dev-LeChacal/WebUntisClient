@@ -10,7 +10,7 @@ A Web Untis API Client to interact with [Web Untis](https://webuntis.com).
 </div>
 
 > [!CAUTION]
-> Work In Progress - Not feature complete yet
+> This package is no longer maintained (contact me if you need help)
 
 ## Examples
 
